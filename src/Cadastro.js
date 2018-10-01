@@ -15,9 +15,9 @@ class Cadastro extends Component {
     console.log("Email: ", input.email)
     console.log("CPF: ", input.cpf)
 
-    // Trocar a proxyURL por uma url nossa
+    // Tirar proxy qnd corrigirem api deles
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/'
-    var targetUrl = 'http://ec2-18-231-28-232.sa-east-1.compute.amazonaws.com:3002/login/'
+    var targetUrl = 'http://ec2-18-231-28-232.sa-east-1.compute.amazonaws.com:3002/register'
     var fetchurl = proxyUrl + targetUrl
 
     return fetch(fetchurl, {
@@ -40,9 +40,44 @@ class Cadastro extends Component {
       const keys = Object.keys(responseJson)
       if(keys[0] === 'message'){
          {this.showModal(responseJson.message)}
+      } else {
+          {this.showModal(responseJson.registerToken)}
+          {this.confirm(responseJson.registerToken)}
       }
     })
-  }  
+  } 
+
+  confirm = input => {
+
+    const token = input.split(':')[1]
+    console.log("Token:", token)
+
+    // Tirar proxy qnd corrigirem api deles
+    var proxyUrl = 'https://cors-anywhere.herokuapp.com/'
+    var targetUrl = 'http://ec2-18-231-28-232.sa-east-1.compute.amazonaws.com:3002/confirm'
+    var fetchurl = proxyUrl + targetUrl
+
+    return fetch(fetchurl, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        registerToken: input,
+      }),
+    }).then((response) => response.json())
+    .then((responseJson) => {
+      const keys = Object.keys(responseJson)
+      if(keys[0] === 'message'){
+         console.log("Error:", responseJson.message)
+      } else {
+         console.log("Token Confirmed:", responseJson.sessionToken)
+      }
+    })
+
+
+  } 
 
   showModal = (message) => {
     this.setState ({
