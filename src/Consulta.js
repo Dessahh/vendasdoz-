@@ -14,33 +14,27 @@ class Consulta extends Component {
   consulta = input => {
     console.log("CPF: ", input.cpf)
 
+
     // Trocar a proxyURL por uma url nossa
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/'
-    var targetUrl = 'http://ec2-18-231-28-232.sa-east-1.compute.amazonaws.com:3002/users/{input.cpf}'
+    var targetUrl = 'http://ec2-18-231-28-232.sa-east-1.compute.amazonaws.com:3002/users/'
+    
+    targetUrl = targetUrl + input.cpf
+     
     var fetchurl = proxyUrl + targetUrl
 
     return fetch(fetchurl, {
-      method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        tokenSessao: "001"
-      }),
-    }).then((response) => response.json())
-    .then((responseJson) => {
-      const keys = Object.keys(responseJson)
-      if(keys[0] == 'message'){
-         {this.showModal(responseJson.message)}
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  }
+    }).then(response => {
+        console.log(response)
+      });
 
-   showModal = (message) => {
+   }
+
+  showModal = (message) => {
     this.setState ({
       message: message,
       show: !this.state.show
