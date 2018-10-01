@@ -1,0 +1,19 @@
+.Modal {
+	position: fixed;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	padding: 100px;
+	margin: 0px auto;
+	background-color: rgba(0,0,0,0.5)
+}
+
+.Modal-Box {
+	background-color: white;
+	width: 560px;
+	height: 150px;
+	margin: 0px auto;
+	padding: 70px;
+	position: relative;
+}

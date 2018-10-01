@@ -1,0 +1,68 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-firstLine {
+  background-color: rgb(111, 143, 00);
+  height: 3px;
+}
+
+.App-secondLine {
+  background-color: rgb(75, 129, 166);
+  height: 3px;
+  margin-top: 20px
+}
+
+.App-header {
+  background-color: white;
+  height: 25px;
+
+  color: rgb(86, 105, 7);
+}
+
+.App-title {
+  font-size: 1.5em;
+  color: rgb(111, 143, 00);
+  margin-right: 540px;
+  font-family: 'Skia', 'Open Sans Condensed', arial, sans;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.App-body {
+  background-color: rgb(35, 101, 147);
+  height: 1000px;
+  margin-top: -50px;
+}
+
+.Blue-Rectangle{
+  background-color: rgb(35, 101, 147);
+  height: 25px;
+  margin-top:50px;
+}
+
+.App-loginBox {
+  
+  margin-top: 40px;
+  background-color: white;
+  height: 400px;
+  width: 560px;
+}
+
+img {
+  float: left;
+  margin-left: 500px;
+  margin-top: -3px;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
