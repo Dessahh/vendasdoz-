@@ -57,7 +57,7 @@ class Cadastro extends Component {
     var targetUrl = 'http://ec2-18-231-28-232.sa-east-1.compute.amazonaws.com:3002/confirm'
     var fetchurl = proxyUrl + targetUrl
 
-    return fetch(fetchurl, {
+    return fetch(targetUrl, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -71,8 +71,8 @@ class Cadastro extends Component {
       const keys = Object.keys(responseJson)
       if(keys[0] === 'message'){
          console.log("Error:", responseJson.message)
-      } else {
-         console.log("Token Confirmed:", responseJson.sessionToken)
+      } else if (keys[0] === 'sessionToken') {
+         console.log("sessionToken:", responseJson.sessionToken)
       }
     })
 
