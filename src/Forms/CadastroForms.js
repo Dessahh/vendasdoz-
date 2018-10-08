@@ -79,7 +79,7 @@ class CadastroForms extends React.Component {
 			/>
 			<br />
 			<button className="form-style-8" onClick={input => this.cadastrar(input)}>Cadastrar</button>
-			<NavLink to="/consulta" > Ir para Consulta </NavLink>
+			<NavLink to="/login" > Logar </NavLink>
 			<header className="App-boxLine" />
 			</form>
 		);

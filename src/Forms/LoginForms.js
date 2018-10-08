@@ -42,7 +42,7 @@ class LoginForms extends React.Component {
 			/>
 			<br />
 			<button className="form-style-8" onClick={input => this.authenticate(input)}>Enviar</button>
-			<NavLink to="/consultar" > Consultar </NavLink>
+			<NavLink to="/consulta" > Consultar </NavLink>
 			<header className="App-boxLine" />
 			</form>
 		);
