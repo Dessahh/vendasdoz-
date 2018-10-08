@@ -34,7 +34,8 @@ class Consulta extends Component {
         }),
       }).then((response) => response.json())
       .then((responseJson) => {
-        {this.showModal(responseJson.nome)}
+        let info = "Nome: " + responseJson.nome + "    Email: " + responseJson.email + "    Telefone: " + responseJson.telefone
+        {this.showModal(info)}
       })
 
       }).catch((error) =>{
