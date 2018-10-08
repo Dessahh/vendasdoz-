@@ -69,13 +69,7 @@ class Consulta extends Component {
     return (
       <div className='App'>
         
-        <header className="App-firstLine"/> 
-        <header className="App-header">
-          <img src={logo} alt="Logo: Carrinho de Vendas" width="55" height="38" />
-          <h1 className="App-title">Vendas do Zé</h1>
-        </header>
-
-        <header className="App-secondLine"/> 
+         
         <div className='App-body'>
            
             <header className="Blue-Rectangle" />
