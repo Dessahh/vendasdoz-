@@ -1,9 +1,11 @@
 import React from 'react';
-import './Login.css';
+import './Forms.css';
+import { NavLink } from 'react-router-dom'
 
-class Login extends React.Component {
+class LoginForms extends React.Component {
 	state = {
-		cpf: '',
+		email: '',
+		senha: '',
 	}
 
 	change = entry => {
@@ -21,20 +23,30 @@ class Login extends React.Component {
 		return (
 			
 			<form className="form-style-8">
-			<h1>Consulta do usuario</h1>
+			<h1>Login</h1>
+			<br />
 			<input 
-				type = "number"
-				name = "cpf"
-				placeholder = "CPF" 
-				value = {this.state.cpf}  
+				type = "email"
+				name = "email"
+				placeholder = "Email" 
+				value = {this.state.email}  
+				onChange = { entry => this.change(entry) } 
+			/>
+			<br />
+			<input 
+				type = "password"
+				name = "senha"
+				placeholder = "Senha" 
+				value = {this.state.senha}  
 				onChange = { entry => this.change(entry) } 
 			/>
 			<br />
 			<button className="form-style-8" onClick={input => this.authenticate(input)}>Enviar</button>
+			<NavLink to="/consulta" > Consultar </NavLink>
 			<header className="App-boxLine" />
 			</form>
 		);
 	}
 }
 
-export default Login
+export default LoginForms

@@ -4,9 +4,13 @@ import logo from './logo2.png'
 import './App.css'
 import 'react-table/react-table.css'
 
+import Navbar from './CustomNavBar.js'
+
 import Cadastro from './Cadastro.js'
 import Consulta from './Consulta.js'
 import Produto from './Produto.js'
+import Login from './Login.js'
+import Home from './Home.js'
 import Error from './Error.js'
 
 class App extends Component {
@@ -14,12 +18,18 @@ class App extends Component {
     return (
 
       <BrowserRouter>
-        <Switch>
-          <Route path='/consulta' component={Consulta} />
-          <Route path='/cadastro' component={Cadastro} />
-          <Route path='/produto' component={Produto} />
-          <Route component={Error} />
-        </Switch>
+        <div>
+          <Navbar />
+          <Switch>
+
+            <Route exact path='/' component={Home} />
+            <Route path='/consulta' component={Consulta} />
+            <Route path='/cadastro' component={Cadastro} />
+              <Route path='/produto' component={Produto} />
+            <Route path='/login' component={Login} />
+            <Route component={Error} />
+          </Switch>
+        </div>
       </BrowserRouter>
 
     )

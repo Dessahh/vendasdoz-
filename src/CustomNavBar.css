@@ -1,0 +1,12 @@
+.navbar-default {
+    background-color: rgb(111, 143, 00);
+    border-color: #e7e7e7;
+}
+
+.navbar {
+    position: relative;
+    min-height: 50px;
+    margin-bottom: 20px;
+    border: 3px solid transparent;
+}
+
