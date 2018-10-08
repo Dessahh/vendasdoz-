@@ -3,6 +3,8 @@ import logo from './logo2.png';
 import './App.css';
 import ConsultaForms from './Forms/ConsultaForms.js'
 import Modal from './Modal.js'
+import { AsyncStorage } from "react-native"
+
 
 class Consulta extends Component {
 
@@ -18,19 +20,27 @@ class Consulta extends Component {
     
     targetUrl = targetUrl + input.cpf
 
-    return fetch(targetUrl, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-         tokenSessao: "andressam.aquino@gmail.com:1538437120111",
-      }),
-    }).then((response) => response.json())
-    .then((responseJson) => {
-      console.log("response: ", responseJson)
-    })
+    this.getToken().then((token) => {
+
+      return fetch(targetUrl, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+           //TODO: pegar token do confirm request
+           tokenSessao: token,
+        }),
+      }).then((response) => response.json())
+      .then((responseJson) => {
+        {this.showModal(responseJson.nome)}
+      })
+
+      }).catch((error) =>{
+
+        console.log(error.message)
+      })
 
    }
 
@@ -39,6 +49,19 @@ class Consulta extends Component {
       message: message,
       show: !this.state.show
     });
+  }
+
+  getToken = async () => {
+    try {
+      const retrievedItem =  await AsyncStorage.getItem('tokenSessao');
+      
+      console.log("Deu certo: ", retrievedItem)
+      return retrievedItem;
+    } catch (error) {
+      console.log(error);
+    }
+    
+    return
   }
 
   render () {
