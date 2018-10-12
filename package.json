@@ -12,9 +12,10 @@
     "react-native-web": "^0.9.1",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-table": "^6.8.6",
     "react-router-native": "^4.3.0",
-    "react-scripts": "1.1.5"
+    "react-scripts": "1.1.5",
+    "react-sidemenu": "^1.0.4",
+    "react-table": "^6.8.6"
   },
   "scripts": {
     "start": "react-scripts start",

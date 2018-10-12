@@ -92,7 +92,6 @@ class Cadastro extends Component {
               
               <div className='App-body'>
                  
-                  <header className="Blue-Rectangle" />
 
                   <CadastroForms cadastrar = {input => this.cadastrar(input)} />
                   

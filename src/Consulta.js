@@ -68,11 +68,8 @@ class Consulta extends Component {
   render () {
     return (
       <div className='App'>
-        
-         
+            
         <div className='App-body'>
-           
-            <header className="Blue-Rectangle" />
 
             <ConsultaForms authenticate = {input => this.consulta(input)} />
             

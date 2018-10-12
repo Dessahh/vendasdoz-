@@ -1,0 +1,46 @@
+.sideBar {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-right: 50px;
+  width: 240px;
+  height: 300px;
+  font-family: 'Skia', 'Open Sans', arial, sans;
+  display: inline-block;
+  float: left;
+}
+
+.sideBar h4 {
+  margin-top: 0px;
+  padding-left: 20px;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  font-weight: bold;
+  font-size: 20px;
+  color: #3A3A3A;
+  background-color: #B0C07B;
+}
+
+.sideBar p {
+  margin-top: 0px;
+  padding: 10px; 
+  font-size: 14px;
+  background-color: #D4DDB8;
+  font-family: "Avenir", 'Open Sans' ;
+}
+
+.sideBar button {
+  padding-left: 20px;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  margin-top: -10px;
+  font-size: 15px;
+  background-color: #D4DDB8;
+  font-family:  "Avenir", 'Open Sans';
+  width: 240px;
+  text-align: left;
+}
+
+.sideBar button:hover {
+  background-color: #8C9F4C;
+  font-weight: bold;
+}

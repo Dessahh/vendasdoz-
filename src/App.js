@@ -11,6 +11,7 @@ import Consulta from './Consulta.js'
 import Produto from './Produto.js'
 import Login from './Login.js'
 import Home from './Home.js'
+import Menu from './Menu.js'
 import Error from './Error.js'
 
 class App extends Component {
@@ -22,13 +23,14 @@ class App extends Component {
           <Navbar />
           <Switch>
 
-            <Route exact path='/' component={Home} />
+            <Route exact path='/' component={Produto} />
             <Route path='/consulta' component={Consulta} />
             <Route path='/cadastro' component={Cadastro} />
-              <Route path='/produto' component={Produto} />
             <Route path='/login' component={Login} />
+            <Route path='/menu' component={Menu} />
             <Route component={Error} />
           </Switch>
+
         </div>
       </BrowserRouter>
 
