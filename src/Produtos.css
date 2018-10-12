@@ -8,9 +8,9 @@
 .rightBox {
 	float: right;
 	display: inline-block;
-	width: 200px;
-	height: 200px;
+	
+	
 	vertical-align: text-top;
-    margin: 0 auto;
+    padding-right: 50px;
 
 }

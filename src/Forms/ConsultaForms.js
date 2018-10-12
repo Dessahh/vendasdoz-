@@ -32,7 +32,7 @@ class ConsultaForms extends React.Component {
 				onChange = { entry => this.change(entry) } 
 			/>
 			<br />
-			<button className="form-style-8" onClick={input => this.authenticate(input)}>Enviar</button>
+			<button className="button-style-8" onClick={input => this.authenticate(input)}>Enviar</button>
 			<NavLink to="/cadastro" > Cadastrar </NavLink>
 			<header className="App-boxLine" />
 			</form>

@@ -27,7 +27,6 @@ export default class Produto extends React.Component {
     this.setState({ loading: true })
     console.log('Product query: ', input)
 
-    // Tirar proxy qnd corrigirem api deles
     var targetUrl = `http://ec2-18-218-218-216.us-east-2.compute.amazonaws.com:8080/api/products?searchType=${input ? input.type : null}&searchString=${input ? input.senha : null}&page=0&size=100`
 
     var encodeCredentials = btoa('test:senhatest')
@@ -82,21 +81,18 @@ export default class Produto extends React.Component {
     return (
 
       <div className='App-body'>
-        <div className='productsTable'>
 
-          <Menu />
-          <div className='rightBox'>
-            <ReactTable
+        <Menu />
 
-              loading={loading}
-              data={data}
-              columns={this.columns}
-              pages={pages}
+        <ReactTable
 
-            />
-          </div>
+          loading={loading}
+          data={data}
+          columns={this.columns}
+          pages={pages}
 
-        </div>
+        />
+
       </div>
 
     )
