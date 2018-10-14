@@ -11,9 +11,6 @@ class Home extends Component {
           <h2> Bem vindos a Vendas do Zé </h2>
 
         </Jumbotron>
-      <Link to='/cadastro'>
-          <Button bsStyle='primary'> Cadastro </Button>
-        </Link>
     </Grid>
     )
   }
