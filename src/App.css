@@ -2,11 +2,6 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
 .App-firstLine {
   background-color: rgb(111, 143, 00);
   height: 3px;
@@ -40,6 +35,7 @@
   background-color: rgb(35, 101, 147);
   height: 1000px;
   margin-top: -50px;
+  padding-top: 100px;
 }
 
 .Blue-Rectangle{
@@ -56,13 +52,4 @@
   width: 560px;
 }
 
-img {
-  float: left;
-  margin-left: 500px;
-  margin-top: -3px;
-}
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}

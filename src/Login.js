@@ -64,11 +64,8 @@ class Login extends React.Component {
 	render () {
 		return (
 	      <div className='App'>
-	              
-	              
+	                         
 	              <div className='App-body'>
-	                 
-	                  <header className="Blue-Rectangle" />
 
 	                  <LoginForms authenticate = {input => this.authenticate(input)} />
 	                  

@@ -1,0 +1,16 @@
+.productsTable {
+	display: flex; 
+	flex-direction: row;
+	background-color: rgb(35, 101, 147);
+	height: 1000px;
+}
+
+.rightBox {
+	float: right;
+	display: inline-block;
+	
+	
+	vertical-align: text-top;
+    padding-right: 50px;
+
+}
