@@ -37,7 +37,7 @@ export default class Produto extends React.Component {
 
         var targetUrl = `http://ec2-18-218-218-216.us-east-2.compute.amazonaws.com:8080/api/products?searchType=${input ? input.type : null}&searchString=${input ? input.senha : null}&page=0&itemsPerPage=100`
 
-        var encodeCredentials = btoa('test:senhatest');
+        var encodeCredentials = btoa('endereco:ZKUS7FGH');
 
         console.log('Initiating product search');
 
