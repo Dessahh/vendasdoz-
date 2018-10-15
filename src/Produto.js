@@ -126,7 +126,9 @@ export default class Produto extends React.Component {
             {Header: 'Type', accessor: 'type', width: 100},
             // {Header: 'Category', accessor: 'category', width: 200},
             // {Header: 'Quantity in Stock', accessor: 'quantityInStock', width: 100},
-            {Header: 'Value', accessor: 'value', width: 100},
+            {Header: 'Value', Cell: (row) => {
+                    return 'R$ ' + parseFloat(row.value).toFixed(2);
+                }, accessor: 'value', width: 100},
             {Header: 'Manufacturer', accessor: 'manufacturer', width: 200},
             {
                 Header: "Image",
