@@ -75,6 +75,22 @@ export default class Menu extends React.Component {
         })
     }
 
+    lowPrice = () => {
+        this.props.priceFilter(0.00, 100.00);
+    };
+
+    mediumPrice = () => {
+        this.props.priceFilter(100.00, 200.00);
+    };
+
+    highPrice = () => {
+        this.props.priceFilter(200.00, 300.00);
+    };
+
+    unlimitedPrice = () => {
+        this.props.priceFilter(300.00, 100000.00);
+    };
+
     filterPrice = input => {
         input.preventDefault()
         console.log(this.state.min)
