@@ -124,40 +124,26 @@ export default class Produto extends React.Component {
       // {Header: 'Name', accessor: 'name', width: 200},
       { Header: 'Description', accessor: 'description', width: 500 },
       { Header: 'Type', accessor: 'type', width: 100 },
-      { Header: 'Category', accessor: 'category', width: 200 },
+      // {Header: 'Category', accessor: 'category', width: 200},
       // {Header: 'Quantity in Stock', accessor: 'quantityInStock', width: 100},
-      { Header: 'Value', accessor: 'value', width: 100 },
+      { Header: 'Value',
+        Cell: (row) => {
+          return 'R$ ' + parseFloat(row.value).toFixed(2)
+        },
+        accessor: 'value',
+        width: 100 },
       { Header: 'Manufacturer', accessor: 'manufacturer', width: 200 },
       {
         Header: 'Image',
         Cell: (row) => {
-          return <div><img height={60} src={row.images ? row.images[0] : null} /></div>
+          return <div><img height={60} src={row.imageURLs ? row.imageURLs[0] : null} /></div>
         },
         accessor: 'images',
         id: 'image'
       }
     ]
 
-        this.columns = [ // Define Table Columns
-            // {Header: 'ID', accessor: 'id', width: 100},
-            // {Header: 'Name', accessor: 'name', width: 200},
-            {Header: 'Description', accessor: 'description', width: 500},
-            {Header: 'Type', accessor: 'type', width: 100},
-            // {Header: 'Category', accessor: 'category', width: 200},
-            // {Header: 'Quantity in Stock', accessor: 'quantityInStock', width: 100},
-            {Header: 'Value', Cell: (row) => {
-                    return 'R$ ' + parseFloat(row.value).toFixed(2);
-                }, accessor: 'value', width: 100},
-            {Header: 'Manufacturer', accessor: 'manufacturer', width: 200},
-            {
-                Header: "Image",
-                Cell: (row) => {
-                    return <div><img height={60} src={row.imageURLs ? row.imageURLs[0] : null}/></div>
-                },
-                accessor: 'images',
-                id: "image"
-            }
-        ];
+    return (
 
       <div className='App-body'>
 
