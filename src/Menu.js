@@ -8,7 +8,13 @@ export default class Menu extends React.Component {
     constructor(props) {
         super(props);
         this.categorys = []
+        this.buttonStyles = []
+        
+    }
 
+    state = {
+        min: 0.00,
+        max: 100000.00,
     }
 
     componentDidMount () {
@@ -34,11 +40,11 @@ export default class Menu extends React.Component {
                     
                     if(this.categorys.indexOf(category) === -1){
                          this.categorys.push(category)
+                         this.buttonStyles.push("unclicked")  
                     }
                       
                 }
-
-                console.log("Categorias: ", this.categorys)  
+ 
                
             })
     };
@@ -47,55 +53,79 @@ export default class Menu extends React.Component {
         return text.slice(0,1).toUpperCase() + text.slice(1, text.length).toLowerCase()
     }
 
-    eletroFilter = () => {
-        this.props.categoryFilter('ELETRODOMESTICO');
-    };
+    categoryFilter = (category, index) => {
 
-    techFilter = () => {
-        this.props.categoryFilter('INFORMATICA');
-    };
-
-    moveisFilter = () => {
-        this.props.categoryFilter('MOVEIS');
-    };
-
-    categoryFilter = (category) => {
-        console.log("1: ", category)
-        this.props.categoryFilter(category)
+        if(this.buttonStyles[index] === "unclicked"){
+            for( let i = 0; i < this.buttonStyles.length; i++ ){
+                this.buttonStyles[i] = "unclicked"
+            }
+            this.buttonStyles[index] = "clicked"
+            this.props.categoryFilter(category)
+        } else {
+            
+            this.buttonStyles[index] = "unclicked"
+            this.clearFilters()
+        }
+        
     }
 
-    lowPrice = () => {
-        this.props.priceFilter(0.00, 100.00);
-    };
+    change = entry => {
+        this.setState({
+            [entry.target.name]: entry.target.value
+        })
+    }
 
-    mediumPrice = () => {
-        this.props.priceFilter(100.00, 200.00);
-    };
+    filterPrice = input => {
+        input.preventDefault()
+        console.log(this.state.min)
+        this.props.priceFilter(this.state.min, this.state.max)
+    }
 
-    highPrice = () => {
-        this.props.priceFilter(200.00, 300.00);
-    };
-
-    unlimitedPrice = () => {
-        this.props.priceFilter(300.00, 100000.00);
-    };
+    clearFilters = () => {
+        for( let i = 0; i < this.buttonStyles.length; i++ ){
+                this.buttonStyles[i] = "unclicked"
+        }
+        this.props.clearFilters()
+    }
 
     render() {
         return (
 
             <div className='sideBar'>
                 <h4>Categorias</h4>  
-                    {this.categorys.map((category, index) =>
-                        <button key={index} onClick={() => this.categoryFilter(category)}>{this.capitalize(category)}</button>
+                    {this.categorys.map((category, index) => 
+                        <button className={this.buttonStyles[index]} key={index} onClick={() => this.categoryFilter(category, index)}>{this.capitalize(category)}</button>
                     )}
 
                 <h4>Preço</h4>
-                <button onClick={this.lowPrice}>R$ 0,00 - R$ 100,00</button>
-                <button onClick={this.mediumPrice}>R$ 100,00 - R$ 200,00</button>
-                <button onClick={this.highPrice}>R$ 200,00 - R$ 300,00</button>
-                <button onClick={this.unlimitedPrice}>A partir de R$ 300,00</button>
-                <h4/>
-                <button onClick={this.props.clearFilters}>Limpar Filtros</button>
+                <div className="back">
+                    <div className="price" > 
+                        <p >Min</p>
+                        <input 
+                            type = "min"
+                            name = "min"
+                            placeholder = "" 
+                            value = {this.state.min}  
+                            onChange = { entry => this.change(entry) } 
+                        />
+                    </div>
+                    <div className="price"> 
+                        <p>Max</p>
+                        <input 
+                            type = "max"
+                            name = "max"
+                            placeholder = "" 
+                            value = {this.state.max}  
+                            onChange = { entry => this.change(entry) } 
+                        />
+                    </div>
+                    
+                    <div className="line">
+                        <button className="center" onClick={input => this.filterPrice(input)}>Enviar</button>
+                    </div>
+                    
+                </div>
+                <button className="clearButton" onClick={this.clearFilters}>Limpar Filtros</button>
             </div>
 
 

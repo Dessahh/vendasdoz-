@@ -65,15 +65,16 @@ export default class Produto extends React.Component {
   };
 
   categoryFilter (category) {
-    console.log('2: ', category)
     this.category = category
 
     this.applyFilters()
   };
 
-  priceFilter (minPrice, maxPrice) {
-    this.minPrice = minPrice
-    this.maxPrice = maxPrice
+  priceFilter (input) {
+    console.log('Min: ', input.min)
+    console.log('Max: ', input.max)
+    this.minPrice = input.min
+    this.maxPrice = input.max
 
     this.applyFilters()
   };
