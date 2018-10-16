@@ -28,9 +28,7 @@ class CustomNavBar extends Component {
             <NavItem eventKey={3} componentClass={Link} href='/cadastro' to='/cadastro'>
               Cadastro
             </NavItem>
-            <NavItem eventKey={3} componentClass={Link} href='/menu' to='/menu'>
-              Menu
-            </NavItem>
+
           </Nav>
         </Navbar.Collapse>
       </Navbar>
