@@ -12,6 +12,7 @@ import Produto from './Produto.js'
 import Login from './Login.js'
 import Home from './Home.js'
 import Menu from './Menu.js'
+import Carrinho from './Carrinho.js'
 import Error from './Error.js'
 
 class App extends Component {
@@ -27,6 +28,7 @@ class App extends Component {
             <Route path='/consulta' component={Consulta} />
             <Route path='/cadastro' component={Cadastro} />
             <Route path='/login' component={Login} />
+            <Route path='/carrinho' component={Carrinho} />
             <Route component={Error} />
           </Switch>
 

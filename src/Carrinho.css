@@ -1,0 +1,40 @@
+.carrinho {
+	background-color: rgb(35, 101, 147);
+	height: 1000px;
+  	margin-top: -50px;
+  	padding-top: 50px;
+  	padding-left: 70px;
+}
+
+.carrinho h2 {
+	font-family: 'Skia', 'Open Sans Condensed', arial, sans;
+	font-weight: bold;
+}
+
+.tableHeader {
+	vertical-align: text-top;
+	display: inline-block;
+}
+
+.resumoPedido {
+	background-color: #D4DDB8;
+	width: 350px;
+	height: 400px;
+	display: inline-block;
+    float: right;
+    margin-top: 63px;
+    margin-right: 25px;
+    padding-left: 20px;
+}
+
+.resumoPedido h3,
+.resumoPedido h4 {
+	font-family: 'Skia', 'Open Sans Condensed', arial, sans;
+	font-weight: bold;
+}
+
+.leftSide {
+	display: inline-block;
+    float: left;
+}
+

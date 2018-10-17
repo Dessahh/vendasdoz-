@@ -101,6 +101,10 @@ export default class Menu extends React.Component {
         for( let i = 0; i < this.buttonStyles.length; i++ ){
                 this.buttonStyles[i] = "unclicked"
         }
+        this.setState({
+            min: 0.00,
+            max: 100000.00,
+        })
         this.props.clearFilters()
     }
 
