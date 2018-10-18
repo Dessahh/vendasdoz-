@@ -28,7 +28,47 @@
   font-family: "Avenir", 'Open Sans' ;
 }
 
-.sideBar button {
+
+
+.price {
+  display: inline-block;
+  background-color: #D4DDB8;
+  margin-left: 5px;
+  }
+
+.price p {
+  float: left;
+  margin-bottom: -5px;
+
+}
+
+.price input {
+  float: right;
+  margin-bottom: -5px;
+}
+
+.back {
+    background-color: #D4DDB8;
+    margin-top: -10px;
+    padding-top: 20px;
+}
+
+.line {
+  background-color: #D4DDB8;
+  width: 240px;
+  border: none;
+
+}
+
+.center {
+  width: 80px;
+  margin-left: 80px;
+  margin-bottom: 20px;
+}
+
+
+
+.unclicked {
   padding-left: 20px;
   padding-top: 13px;
   padding-bottom: 13px;
@@ -40,7 +80,35 @@
   text-align: left;
 }
 
-.sideBar button:hover {
+.clicked {
   background-color: #8C9F4C;
   font-weight: bolder;
+  padding-left: 20px;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  margin-top: -10px;
+  font-size: 15px;
+  font-family:  "Avenir", 'Open Sans';
+  width: 240px;
+  text-align: left;
 }
+
+.unclicked:hover {
+  background-color: #E0E6CB;
+}
+
+.clearButton {
+    background-color: white;
+    font-weight: bolder;
+  padding-left: 20px;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  margin-top: -5px;
+  font-size: 15px;
+  font-family:  "Avenir", 'Open Sans';
+  width: 240px;
+  text-align: left;
+  border: none;
+}
+
+
