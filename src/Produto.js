@@ -40,74 +40,33 @@ export default class Produto extends React.Component {
         this.setState({loading: true});
         console.log('Product query: ', input);
 
-        // var targetUrl = `http://ec2-18-218-218-216.us-east-2.compute.amazonaws.com:8080/api/products?page=0&itemsPerPage=100`;
-        //
-        // var encodeCredentials = btoa('endereco:ZKUS7FGH');
-        //
-        // console.log('Initiating product search');
-        //
-        // return fetch(targetUrl, {
-        //     method: 'GET',
-        //     headers: {
-        //         'Authorization': 'Basic ' + encodeCredentials
-        //     }
-        // }).then((response) => response.json())
-        //     .then((responseJson) => {
-        //         console.dir('ResponseJson: ' + responseJson);
-        //         for (var json in responseJson.content) {
-        //             this.products.push(responseJson.content[json]);
-        //             this.clearProducts.push(responseJson.content[json])
-        //         }
-        //         console.dir('Products: ' + this.products);
-        //         console.dir('All Products: ' + this.clearProducts);
-        //         this.state.data = this.products;
-        //         this.setState({
-        //             data: this.products,
-        //             pages: 1,
-        //             loading: false
-        //         });
-        //     });
-        this.products.push({
-            "id": "6f2b3d7d-731e-4da1-92e6-93d385182af1",
-            "name": "BRM58AK",
-            "ownerGroup": "CRED",
-            "category": "ELETRODOMESTICO",
-            "type": "Geladeira",
-            "manufacturer": "Brastemp",
-            "quantityInStock": 10,
-            "value": 3499.99,
-            "availableToSell": true,
-            "creationDate": "2018-09-20",
-            "updateDate": "2018-09-24",
-            "weight": 82,
-            "images": [
-                {"url": "https://bit.ly/2y7RQgT"}
-            ],
-            "description": "Geladeira Brastemp Frost Free Duplex 500 litros cor Inox com Turbo Control"
-        });
-        this.clearProducts.push({
-            "id": "6f2b3d7d-731e-4da1-92e6-93d385182af1",
-            "name": "BRM58AK",
-            "ownerGroup": "CRED",
-            "category": "ELETRODOMESTICO",
-            "type": "Geladeira",
-            "manufacturer": "Brastemp",
-            "quantityInStock": 10,
-            "value": 3499.99,
-            "availableToSell": true,
-            "creationDate": "2018-09-20",
-            "updateDate": "2018-09-24",
-            "weight": 82,
-            "images": [
-                {"url": "https://bit.ly/2y7RQgT"}
-            ],
-            "description": "Geladeira Brastemp Frost Free Duplex 500 litros cor Inox com Turbo Control"
-        });
-        this.setState({
-            data: this.products,
-            pages: 1,
-            loading: false
-        });
+        var targetUrl = `http://ec2-18-218-218-216.us-east-2.compute.amazonaws.com:8080/api/products?page=0&itemsPerPage=100`;
+
+        var encodeCredentials = btoa('endereco:ZKUS7FGH');
+
+        console.log('Initiating product search');
+
+        return fetch(targetUrl, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Basic ' + encodeCredentials
+            }
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                console.dir('ResponseJson: ' + responseJson);
+                for (var json in responseJson.content) {
+                    this.products.push(responseJson.content[json]);
+                    this.clearProducts.push(responseJson.content[json])
+                }
+                console.dir('Products: ' + this.products);
+                console.dir('All Products: ' + this.clearProducts);
+                this.state.data = this.products;
+                this.setState({
+                    data: this.products,
+                    pages: 1,
+                    loading: false
+                });
+            });
     };
 
     categoryFilter(category) {
@@ -161,32 +120,6 @@ export default class Produto extends React.Component {
         }
     }
 
-    getTdProps(state, rowInfo, column, instance) {
-        return {
-            onClick: (e, handleOriginal) => {
-                console.log("A Td Element was clicked!");
-                console.log("it produced this event:", e);
-                console.log("It was in this column:", column);
-                console.log("It was in this row:", rowInfo);
-                console.log("It was in this table instance:", instance);
-
-                this.props.navigation.navigate('DetalheProduto', {
-                    id: this.state.data[rowInfo.index].id
-                })
-
-                // IMPORTANT! React-Table uses onClick internally to trigger
-                // events like expanding SubComponents and pivots.
-                // By default a custom 'onClick' handler will override this functionality.
-                // If you want to fire the original onClick handler, call the
-                // 'handleOriginal' function.
-                // if (handleOriginal) {
-                //     handleOriginal();
-                // }
-            }
-        };
-    }
-
-
     render() {
         const {data, pages, loading} = this.state;
 
@@ -201,19 +134,19 @@ export default class Produto extends React.Component {
                             style={{'width':'initial'}}/>
                         <div>
                             <CardContent>
-                                <Typography component="h5" variant="h5" style={{'padding-top':'3px', 'padding-left':'3px'}}>
+                                <Typography component="h5" variant="h5" style={{'paddingTop':'3px', 'paddingLeft':'3px'}}>
                                     {data[row.index].description}
                                 </Typography>
-                                <Typography variant="h5" style={{'padding-bottom':'3px', 'padding-left':'3px'}}>
+                                <Typography variant="h5" style={{'padding-bottom':'3px', 'paddingLeft':'3px'}}>
                                     {'R$ ' + parseFloat(data[row.index].value).toFixed(2)}
                                 </Typography>
-                                <Typography variant="subtitle1" color="textSecondary" style={{'padding-top':'3px', 'padding-left':'3px'}}>
+                                <Typography variant="subtitle1" color="textSecondary" style={{'paddingTop':'3px', 'paddingLeft':'3px'}}>
                                     Fabricante: {data[row.index].manufacturer}
                                 </Typography>
-                                <Typography variant="subtitle1" color="textSecondary" style={{'padding-left':'3px'}}>
+                                <Typography variant="subtitle1" color="textSecondary" style={{'paddingLeft':'3px'}}>
                                     Categoria: {data[row.index].type}
                                 </Typography>
-                                <Typography variant="subtitle1" color="textSecondary" style={{'padding-bottom':'3px', 'padding-left':'3px'}}>
+                                <Typography variant="subtitle1" color="textSecondary" style={{'paddingBottom':'3px', 'paddingLeft':'3px'}}>
                                     Quantidade em estoque: {data[row.index].quantityInStock}
                                 </Typography>
                             </CardContent>
