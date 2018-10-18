@@ -16,7 +16,7 @@ export default class Menu extends React.Component {
     state = {
         min: 0.00,
         max: 100000.00,
-    }
+    };
 
     componentDidMount () {
 
@@ -37,10 +37,10 @@ export default class Menu extends React.Component {
                 
                 for (var json in responseJson.content) {
                     
-                    var category = responseJson.content[json].category
+                    var category = responseJson.content[json].category;
                     
                     if(this.categorys.indexOf(category) === -1){
-                         this.categorys.push(category)
+                         this.categorys.push(category);
                          this.buttonStyles.push("unclicked")  
                     }
                       
@@ -68,35 +68,19 @@ export default class Menu extends React.Component {
             this.clearFilters()
         }
         
-    }
+    };
 
     change = entry => {
         this.setState({
             [entry.target.name]: entry.target.value
         })
-    }
-
-    lowPrice = () => {
-        this.props.priceFilter(0.00, 100.00);
-    };
-
-    mediumPrice = () => {
-        this.props.priceFilter(100.00, 200.00);
-    };
-
-    highPrice = () => {
-        this.props.priceFilter(200.00, 300.00);
-    };
-
-    unlimitedPrice = () => {
-        this.props.priceFilter(300.00, 100000.00);
     };
 
     filterPrice = input => {
         input.preventDefault()
-        console.log(this.state.min)
+        console.log(this.state.min);
         this.props.priceFilter(this.state.min, this.state.max)
-    }
+    };
 
     clearFilters = () => {
         for( let i = 0; i < this.buttonStyles.length; i++ ){
@@ -105,9 +89,9 @@ export default class Menu extends React.Component {
         this.setState({
             min: 0.00,
             max: 100000.00,
-        })
+        });
         this.props.clearFilters()
-    }
+    };
 
     render() {
         return (
