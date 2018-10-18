@@ -7,6 +7,9 @@ export default class Carrinho extends React.Component {
     super()
     this.columns = []
     this.products = []
+    this.frete = 1.11
+    this.subtotal = 2.22
+    this.total = 3.33
 
     this.calcularFrete = this.calcularFrete.bind(this)
 
@@ -34,7 +37,7 @@ export default class Carrinho extends React.Component {
     console.log('Frete query: ', this.state.cep)
 
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/'
-    var targetUrl = `https://shielded-caverns-17296.herokuapp.com/search`
+    var targetUrl = `https://shielded-caverns-17296.herokuapp.com/search/frete`
 
     targetUrl = proxyUrl + targetUrl
 
@@ -52,6 +55,7 @@ export default class Carrinho extends React.Component {
         const keys = Object.keys(responseJson)
         console.log(keys[0])
         console.log(responseJson.response)
+        
       })
   }
 
@@ -67,7 +71,15 @@ export default class Carrinho extends React.Component {
 	        id: 'image'
 	      },
       { Header: 'Produto', accessor: 'description', width: 400 },
-      { Header: 'Quantidade', accessor: 'quantity', width: 100 },
+      { Header: 'Quantidade',
+      	Cell: (row) => {
+	          return <div>
+	          	<button>-</button>	
+	         	<p>{row.quantity}</p>
+	         	<button>+</button>	
+	          </div>
+	    },
+      	accessor: 'quantity', width: 100 },
       { Header: 'Preço',
         Cell: (row) => {
           return 'R$ ' + parseFloat(row.value).toFixed(2)
@@ -94,20 +106,39 @@ export default class Carrinho extends React.Component {
 
 	        />
 
-	        <input 
-	            type = "number"
-	            name = "cep"
-	            placeholder = "CEP" 
-	            value = {this.state.cep}  
-	            onChange = { entry => this.change(entry) } 
-	        />
-	        <button onClick={this.calcularFrete}>Calcular Frete</button>
+	        <div className="frete">
+
+		        <input 
+		            type = "number"
+		            name = "cep"
+		            placeholder = "CEP" 
+		            value = {this.state.cep}  
+		            onChange = { entry => this.change(entry) } 
+		        />
+		        <button onClick={this.calcularFrete}>Calcular Frete</button>
+
+		        <input type="radio" />
+		    </div>
 
 	    </div>
 
 	    <div className="resumoPedido">
 	    	<h3>Resumo do Pedido</h3>
+	    	<div className="horizontalLayout">
+		    	<p className="leftSide">Subtotal</p>
+		    	<p className="rightSide">{'R$ ' + parseFloat(this.subtotal).toFixed(2)}</p>
+		    </div>
+		    <div className="horizontalLayout">
+		    	<p className="leftSide">Frete</p>
+		    	<p className="rightSide">{'R$ ' + parseFloat(this.frete).toFixed(2)}</p>
+	    	</div>
 
+	    	<div className="line"></div>
+	    	<div className="horizontalLayout">
+		    	<h4 className="leftSide">Total</h4>
+		    	<h4 className="rightSide">{'R$ ' + parseFloat(this.total).toFixed(2)}</h4>
+	    	</div>
+	    	<button>Continuar</button>
 	    </div>
       </div>
     )
