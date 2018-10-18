@@ -16,6 +16,7 @@ const items = [
     {label: 'Eletrodomésticos', value: 'item3'}];
 
 
+//TODO: ec2-18-218-218-216.us-east-2.compute.amazonaws.com:8080/api/products/categories
 export default class Menu extends React.Component {
 
     constructor(props) {

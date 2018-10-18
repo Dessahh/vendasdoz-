@@ -35,7 +35,7 @@ export default class Produto extends React.Component {
         this.setState({loading: true});
         console.log('Product query: ', input);
 
-        var targetUrl = `http://ec2-18-218-218-216.us-east-2.compute.amazonaws.com:8080/api/products?searchType=${input ? input.type : null}&searchString=${input ? input.senha : null}&page=0&itemsPerPage=100`
+        var targetUrl = `http://ec2-18-218-218-216.us-east-2.compute.amazonaws.com:8080/api/products?page=0&itemsPerPage=100`;
 
         var encodeCredentials = btoa('endereco:ZKUS7FGH');
 
@@ -61,7 +61,7 @@ export default class Produto extends React.Component {
                     pages: 1,
                     loading: false
                 });
-            })
+            });
     };
 
     categoryFilter (category) {
@@ -115,28 +115,52 @@ export default class Produto extends React.Component {
         }
     }
 
+    getTdProps(state, rowInfo, column, instance) {
+        return {
+            onClick: (e, handleOriginal) => {
+                console.log("A Td Element was clicked!");
+                console.log("it produced this event:", e);
+                console.log("It was in this column:", column);
+                console.log("It was in this row:", rowInfo);
+                console.log("It was in this table instance:", instance);
+
+                this.props.navigation.navigate('DetalheProduto', {
+                    id: this.state.data[rowInfo.index].id
+                })
+
+                // IMPORTANT! React-Table uses onClick internally to trigger
+                // events like expanding SubComponents and pivots.
+                // By default a custom 'onClick' handler will override this functionality.
+                // If you want to fire the original onClick handler, call the
+                // 'handleOriginal' function.
+                // if (handleOriginal) {
+                //     handleOriginal();
+                // }
+            }
+        };
+    }
+
+
 
     render() {
         const {data, pages, loading} = this.state;
 
         this.columns = [ // Define Table Columns
-            // {Header: 'ID', accessor: 'id', width: 100},
-            // {Header: 'Name', accessor: 'name', width: 200},
-            {Header: 'Description', accessor: 'description', width: 500},
-            {Header: 'Type', accessor: 'type', width: 100},
-            // {Header: 'Category', accessor: 'category', width: 200},
-            // {Header: 'Quantity in Stock', accessor: 'quantityInStock', width: 100},
-            {Header: 'Value', Cell: (row) => {
-                    return 'R$ ' + parseFloat(row.value).toFixed(2);
-                }, accessor: 'value', width: 100},
-            {Header: 'Manufacturer', accessor: 'manufacturer', width: 200},
             {
-                Header: "Image",
                 Cell: (row) => {
-                    return <div><img height={60} src={row.imageURLs ? row.imageURLs[0] : null}/></div>
+                    return <div>
+                        <div className='container'>
+                            <div className='row'>
+                                <img className='btn' height={60} src={data[row.index].images[0] ? data[row.index].images[0].url : null}/>
+                            </div>
+                            <div className='clear'>
+                                <div>{data[row.index].description}</div>
+                                <div>{data[row.index].value}</div>
+                            </div>
+                        </div>
+                    </div>
                 },
-                accessor: 'images',
-                id: "image"
+                id: 'images'
             }
         ];
 
