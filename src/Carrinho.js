@@ -94,9 +94,10 @@ export default class Carrinho extends React.Component {
 	      })
     }).then((response) => response.json())
       .then((responseJson) => {
-        const keys = Object.keys(responseJson)
-        console.log(keys[0])
-        
+   
+       	/// TODO: Quando o módulo estiver funcionando
+  	    /// Setar os valores de pacValue, pacPrazo, sedexValue e sedexPrazo
+        /// Chamar calcularFrete ou setar showFrete pra true aqui msm 
         
       })
   }
