@@ -1,6 +1,6 @@
 .carrinho {
 	background-color: rgb(35, 101, 147);
-	height: 1000px;
+	height: 1400px;
   	margin-top: -50px;
   	padding-top: 50px;
   	padding-left: 70px;
@@ -16,11 +16,11 @@
 	display: inline-block;
 }
 
-.frete {
+.calcularFrete {
 	margin-top: 20px;
 }
 
-.frete input {
+.calcularFrete input {
 	margin-right: 20px;
 }
 
@@ -83,4 +83,15 @@
 	background-color: gray;
 	width: 310px;
 	height: 1px;
+}
+
+.fretes{
+	margin-top: 20px;
+	padding-top: 10px;
+	padding-left: 10px;
+	background-color: lightgray;
+}
+
+.fretes input {
+	margin-right: 10px;
 }

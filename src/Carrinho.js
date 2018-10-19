@@ -1,22 +1,36 @@
 import React from 'react'
 import './Carrinho.css'
 import ReactTable from 'react-table'
+import {withStyles} from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import FreteBox from './FreteBox.js'
 
 export default class Carrinho extends React.Component {
   constructor () {
     super()
     this.columns = []
     this.products = []
-    this.frete = 1.11
-    this.subtotal = 2.22
-    this.total = 3.33
 
+    this.pacValue = 10
+    this.pacPrazo = 5
+
+    this.sedexValue = 25
+    this.sedexPrazo = 3
+    
     this.calcularFrete = this.calcularFrete.bind(this)
+    this.setFrete = this.setFrete.bind(this)
 
   }
 
   state = {
 	  	cep: '',
+	  	showFrete: false,
+	  	frete: '',
+	  	total: '',
+	  	subtotal: 11.20,
 	}
 
   change = entry => {
@@ -24,6 +38,8 @@ export default class Carrinho extends React.Component {
 			[entry.target.name]: entry.target.value
 		})
 	}
+
+  
 
   getTheadThProps (state, rowInfo, column, instance) {
     return {
@@ -34,6 +50,32 @@ export default class Carrinho extends React.Component {
   }
 
   calcularFrete () {
+  		this.setState({
+        	showFrete: true
+        })
+  }
+
+  setFrete (pacBool) {
+
+  	var sum = null
+  	var freteValue = null
+
+  	if (!pacBool) {
+  		sum = this.state.subtotal + this.pacValue
+  		freteValue = this.pacValue
+  		
+  	} else {
+  		sum = this.state.subtotal + this.sedexValue
+  		freteValue = this.sedexValue
+  	}
+
+  	this.setState ({
+  		total: sum,
+  		frete: freteValue,
+  	})
+  }
+
+  fetch () {
     console.log('Frete query: ', this.state.cep)
 
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/'
@@ -54,14 +96,14 @@ export default class Carrinho extends React.Component {
       .then((responseJson) => {
         const keys = Object.keys(responseJson)
         console.log(keys[0])
-        console.log(responseJson.response)
+        
         
       })
   }
 
   render () {
 
-  	this.columns = [
+  	this.colunas = [
 	  	{
 	        Header: 'Image',
 	        Cell: (row) => {
@@ -87,7 +129,46 @@ export default class Carrinho extends React.Component {
         accessor: 'value',
         width: 100 }
 
-    ]
+    ];
+
+    let data = this.products
+
+    this.columns = [ // Define Table Columns
+            {
+                Cell: (row) => {
+                    return <Card style={{'display':'flex', 'padding':'10px'}}>
+                        <CardMedia
+                            component="img"
+                            image={data[row.index].images[0] ? data[row.index].images[0].url : null}
+                            height='140'
+                            style={{'width':'initial'}}/>
+                        <div>
+                            <CardContent>
+                                <Typography component="h5" variant="h5" style={{'paddingTop':'3px', 'paddingLeft':'3px'}}>
+                                    {data[row.index].description}
+                                </Typography>
+                                <Typography variant="h5" style={{'padding-bottom':'3px', 'paddingLeft':'3px'}}>
+                                    {'R$ ' + parseFloat(data[row.index].value).toFixed(2)}
+                                </Typography>
+                                <Typography variant="subtitle1" color="textSecondary" style={{'paddingTop':'3px', 'paddingLeft':'3px'}}>
+                                    Fabricante: {data[row.index].manufacturer}
+                                </Typography>
+                                <Typography variant="subtitle1" color="textSecondary" style={{'paddingLeft':'3px'}}>
+                                    Categoria: {data[row.index].type}
+                                </Typography>
+                                <Typography variant="subtitle1" color="textSecondary" style={{'paddingBottom':'3px', 'paddingLeft':'3px'}}>
+                                    Quantidade: {data[row.index].quantity}
+                                </Typography>
+                            </CardContent>
+                        </div>
+                        <div>
+
+                        </div>
+                    </Card>
+                },
+                id: 'images'
+            }
+        ];
 
     return (
       <div className='carrinho'>
@@ -104,9 +185,10 @@ export default class Carrinho extends React.Component {
 	          getTheadThProps={this.getTheadThProps}
 	          getTdProps={this.getTheadThProps}
 
+
 	        />
 
-	        <div className="frete">
+	        <div className="calcularFrete">
 
 		        <input 
 		            type = "number"
@@ -117,8 +199,12 @@ export default class Carrinho extends React.Component {
 		        />
 		        <button onClick={this.calcularFrete}>Calcular Frete</button>
 
-		        <input type="radio" />
+		        
 		    </div>
+
+		   <FreteBox show={this.state.showFrete} setFrete={this.setFrete} pacValue={this.pacValue} pacPrazo={this.pacPrazo} sedexValue={this.sedexValue} sedexPrazo={this.sedexPrazo}/>
+
+		    
 
 	    </div>
 
@@ -126,17 +212,17 @@ export default class Carrinho extends React.Component {
 	    	<h3>Resumo do Pedido</h3>
 	    	<div className="horizontalLayout">
 		    	<p className="leftSide">Subtotal</p>
-		    	<p className="rightSide">{'R$ ' + parseFloat(this.subtotal).toFixed(2)}</p>
+		    	<p className="rightSide">{'R$ ' + parseFloat(this.state.subtotal).toFixed(2)}</p>
 		    </div>
 		    <div className="horizontalLayout">
 		    	<p className="leftSide">Frete</p>
-		    	<p className="rightSide">{'R$ ' + parseFloat(this.frete).toFixed(2)}</p>
+		    	<p className="rightSide">{'R$ ' + parseFloat(this.state.frete).toFixed(2)}</p>
 	    	</div>
 
 	    	<div className="line"></div>
 	    	<div className="horizontalLayout">
 		    	<h4 className="leftSide">Total</h4>
-		    	<h4 className="rightSide">{'R$ ' + parseFloat(this.total).toFixed(2)}</h4>
+		    	<h4 className="rightSide">{'R$ ' + parseFloat(this.state.total).toFixed(2)}</h4>
 	    	</div>
 	    	<button>Continuar</button>
 	    </div>
