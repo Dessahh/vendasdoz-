@@ -3,17 +3,22 @@ import './App.css'
 import ReactTable from 'react-table'
 import Menu from './Menu.js'
 import 'react-table/react-table.css'
-import {withStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 export default class Produto extends React.Component {
     constructor() {
         super();
         this.columns = [];
         this.products = [];
+        this.quantity = {};
         this.clearProducts = [];
         this.state = {
             data: [],
@@ -59,6 +64,7 @@ export default class Produto extends React.Component {
                 for (var json in responseJson.content) {
                     this.products.push(responseJson.content[json]);
                     this.clearProducts.push(responseJson.content[json])
+                    this.quantity[json] = 0;
                 }
                 console.dir('Products: ' + this.products);
                 console.dir('All Products: ' + this.clearProducts);
@@ -84,7 +90,7 @@ export default class Produto extends React.Component {
         this.applyFilters();
     };
 
-    nameFilter(query){
+    nameFilter(query) {
         this.nameQuery = query;
         this.applyFilters();
     }
@@ -101,7 +107,7 @@ export default class Produto extends React.Component {
                 continue;
             }
 
-            if(this.nameQuery != "" && !this.clearProducts[i].description.toUpperCase().includes(this.nameQuery.toUpperCase())){
+            if (this.nameQuery != "" && !this.clearProducts[i].description.toUpperCase().includes(this.nameQuery.toUpperCase())) {
                 continue;
             }
             this.products.push(this.clearProducts[i]);
@@ -123,6 +129,11 @@ export default class Produto extends React.Component {
         this.applyFilters();
     }
 
+    selectQuantity(event, index) {
+        this.quantity[index] = event.target.value;
+        this.setState({ [event.target.name]: event.target.value });
+    }
+
     getTheadThProps(state, rowInfo, column, instance) {
         return {
             style: {
@@ -132,34 +143,65 @@ export default class Produto extends React.Component {
     }
 
     render() {
-        const {data, pages, loading} = this.state;
+        const {data, pages, loading, quantity} = this.state;
 
         this.columns = [ // Define Table Columns
             {
                 Cell: (row) => {
-                    return <Card style={{'display':'flex', 'padding':'10px'}}>
+                    return <Card style={{'display': 'flex', 'padding': '10px'}}>
                         <CardMedia
                             component="img"
                             image={data[row.index].images[0] ? data[row.index].images[0].url : null}
                             height='140'
-                            style={{'width':'initial'}}/>
+                            style={{'width': 'initial'}}/>
                         <div>
                             <CardContent>
-                                <Typography component="h5" variant="h5" style={{'paddingTop':'3px', 'paddingLeft':'3px'}}>
+                                <Typography component="h5" variant="h5"
+                                            style={{'paddingTop': '3px', 'paddingLeft': '3px'}}>
                                     {data[row.index].description}
                                 </Typography>
-                                <Typography variant="h5" style={{'padding-bottom':'3px', 'paddingLeft':'3px'}}>
+                                <Typography variant="h5" style={{'padding-bottom': '3px', 'paddingLeft': '3px'}}>
                                     {'R$ ' + parseFloat(data[row.index].value).toFixed(2)}
                                 </Typography>
-                                <Typography variant="subtitle1" color="textSecondary" style={{'paddingTop':'3px', 'paddingLeft':'3px'}}>
+                                <Typography variant="subtitle1" color="textSecondary"
+                                            style={{'paddingTop': '3px', 'paddingLeft': '3px'}}>
                                     Fabricante: {data[row.index].manufacturer}
                                 </Typography>
-                                <Typography variant="subtitle1" color="textSecondary" style={{'paddingLeft':'3px'}}>
+                                <Typography variant="subtitle1" color="textSecondary" style={{'paddingLeft': '3px'}}>
                                     Categoria: {data[row.index].type}
                                 </Typography>
-                                <Typography variant="subtitle1" color="textSecondary" style={{'paddingBottom':'3px', 'paddingLeft':'3px'}}>
+                                <Typography variant="subtitle1" color="textSecondary"
+                                            style={{'paddingBottom': '3px', 'paddingLeft': '3px'}}>
                                     Quantidade em estoque: {data[row.index].quantityInStock}
                                 </Typography>
+                                <FormControl style={{
+                                    'margin': 'theme.spacing.unit',
+                                    'minWidth': '60px'
+                                }}>
+                                    <Select
+                                        value={this.quantity[row.index]}
+                                        name="quantity"
+                                        onChange={(event) => this.selectQuantity(event, row.index,)}
+                                        style={{'marginTop': 'theme.spacing.unit * 2'}}
+                                    >
+                                        <MenuItem value={0}>
+                                            <em>0</em>
+                                        </MenuItem>
+                                        <MenuItem value={1}>1</MenuItem>
+                                        <MenuItem value={2}>2</MenuItem>
+                                        <MenuItem value={3}>3</MenuItem>
+                                        <MenuItem value={4}>4</MenuItem>
+                                        <MenuItem value={5}>5</MenuItem>
+                                        <MenuItem value={6}>6</MenuItem>
+                                        <MenuItem value={7}>7</MenuItem>
+                                        <MenuItem value={8}>8</MenuItem>
+                                        <MenuItem value={9}>9</MenuItem>
+                                        <MenuItem value={10}>10</MenuItem>
+                                    </Select>
+                                </FormControl>
+                                <IconButton color="primary" aria-label="Add to shopping cart">
+                                    <AddShoppingCartIcon/>
+                                </IconButton>
                             </CardContent>
                         </div>
                         <div>
