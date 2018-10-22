@@ -10,6 +10,7 @@ import Cadastro from './Cadastro.js'
 import Consulta from './Consulta.js'
 import Produto from './Produto.js'
 import Login from './Login.js'
+import Usuario from './Usuario.js'
 import Home from './Home.js'
 import Menu from './Menu.js'
 import Carrinho from './Carrinho.js'
@@ -28,6 +29,7 @@ class App extends Component {
             <Route path='/consulta' component={Consulta} />
             <Route path='/cadastro' component={Cadastro} />
             <Route path='/login' component={Login} />
+              <Route path='/usuario' component={Usuario} />
             <Route path='/carrinho' component={Carrinho} />
             <Route component={Error} />
           </Switch>

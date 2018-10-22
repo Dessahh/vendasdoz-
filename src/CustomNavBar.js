@@ -22,8 +22,11 @@ class CustomNavBar extends Component {
             <NavItem eventKey={1} componentClass={Link} href='/' to='/'>
                             Home
             </NavItem>
-            <NavItem eventKey={3} componentClass={Link} href='/cadastro' to='/carrinho'>
+            <NavItem eventKey={4} componentClass={Link} href='/carrinho' to='/carrinho'>
                             Carrinho
+            </NavItem>
+            <NavItem eventKey={2} componentClass={Link} href='/usuario' to='/usuario'>
+                            Painel do Usuário
             </NavItem>
             <NavItem eventKey={2} componentClass={Link} href='/login' to='/login'>
                             Login
