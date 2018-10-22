@@ -12,13 +12,13 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Sessao from "./Sessao";
 
 export default class Produto extends React.Component {
     constructor() {
         super();
         this.columns = [];
         this.products = [];
-        this.quantity = {};
         this.clearProducts = [];
         this.state = {
             data: [],
@@ -29,6 +29,8 @@ export default class Produto extends React.Component {
         this.nameFilter = this.nameFilter.bind(this);
         this.priceFilter = this.priceFilter.bind(this);
         this.clearFilters = this.clearFilters.bind(this);
+        this.addToCart = this.addToCart.bind(this);
+        this.selectQuantity = this.selectQuantity.bind(this);
 
         this.minPrice = 0;
         this.maxPrice = 10000000;
@@ -63,8 +65,9 @@ export default class Produto extends React.Component {
                 console.dir('ResponseJson: ' + responseJson);
                 for (var json in responseJson.content) {
                     this.products.push(responseJson.content[json]);
-                    this.clearProducts.push(responseJson.content[json])
-                    this.quantity[json] = 0;
+                    this.products[json].cartQuantity = 0;
+                    this.clearProducts.push(responseJson.content[json]);
+                    this.clearProducts[json].cartQuantity = 0;
                 }
                 console.dir('Products: ' + this.products);
                 console.dir('All Products: ' + this.clearProducts);
@@ -130,8 +133,17 @@ export default class Produto extends React.Component {
     }
 
     selectQuantity(event, index) {
-        this.quantity[index] = event.target.value;
+        this.products[index].cartQuantity = event.target.value;
         this.setState({ [event.target.name]: event.target.value });
+    }
+
+    addToCart(rowIndex) {
+        if (this.products[rowIndex].cartQuantity === 0) {
+            return;
+        }
+
+        Sessao.addProductToShopCart(this.products[rowIndex]);
+        console.log(`Added ${this.products[rowIndex].cartQuantity} ${this.products[rowIndex].description} to cart`)
     }
 
     getTheadThProps(state, rowInfo, column, instance) {
@@ -160,7 +172,7 @@ export default class Produto extends React.Component {
                                             style={{'paddingTop': '3px', 'paddingLeft': '3px'}}>
                                     {data[row.index].description}
                                 </Typography>
-                                <Typography variant="h5" style={{'padding-bottom': '3px', 'paddingLeft': '3px'}}>
+                                <Typography variant="h5" style={{'paddingBottom': '3px', 'paddingLeft': '3px'}}>
                                     {'R$ ' + parseFloat(data[row.index].value).toFixed(2)}
                                 </Typography>
                                 <Typography variant="subtitle1" color="textSecondary"
@@ -179,7 +191,7 @@ export default class Produto extends React.Component {
                                     'minWidth': '60px'
                                 }}>
                                     <Select
-                                        value={this.quantity[row.index]}
+                                        value={this.products[row.index].cartQuantity}
                                         name="quantity"
                                         onChange={(event) => this.selectQuantity(event, row.index,)}
                                         style={{'marginTop': 'theme.spacing.unit * 2'}}
@@ -199,7 +211,7 @@ export default class Produto extends React.Component {
                                         <MenuItem value={10}>10</MenuItem>
                                     </Select>
                                 </FormControl>
-                                <IconButton color="primary" aria-label="Add to shopping cart">
+                                <IconButton color="primary" aria-label="Adicionar ao carrinho" onClick={() => this.addToCart(row.index)}>
                                     <AddShoppingCartIcon/>
                                 </IconButton>
                             </CardContent>
