@@ -1,6 +1,10 @@
 
 # Created by https://www.gitignore.io/api/node,webstorm,reactnative
 
+node_modules/**
+node_modules/*
+node_modules/react/**
+
 ### Node ###
 # Logs
 logs

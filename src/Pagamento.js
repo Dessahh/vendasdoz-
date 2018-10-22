@@ -2,7 +2,7 @@ import React from 'react'
 import './Carrinho.css'
 import ReactTable from 'react-table'
 
-export default class Carrinho extends React.Component {
+export default class Pagamento extends React.Component {
   constructor () {
     super()
     this.columns = []
@@ -106,8 +106,9 @@ export default class Carrinho extends React.Component {
 	    </div>
 
 	    <div className="resumoPedido">
-	    	<h3>Resumo do Pedido</h3>
-            <a href="../pagamento">Pagar</a>
+            <h3>Detalhes do Pagamento</h3>
+
+
 	    </div>
       </div>
     )

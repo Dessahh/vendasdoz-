@@ -15,6 +15,7 @@ import Home from './Home.js'
 import Menu from './Menu.js'
 import Carrinho from './Carrinho.js'
 import Error from './Error.js'
+import Pagamento from "./Pagamento";
 
 class App extends Component {
   render () {
@@ -31,6 +32,7 @@ class App extends Component {
             <Route path='/login' component={Login} />
               <Route path='/usuario' component={Usuario} />
             <Route path='/carrinho' component={Carrinho} />
+            <Route path='/pagamento' component={Pagamento} />
             <Route component={Error} />
           </Switch>
 
