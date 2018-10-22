@@ -16,6 +16,7 @@ export default class Menu extends React.Component {
     state = {
         min: 0.00,
         max: 100000.00,
+        nameQuery: "",
     };
 
     componentDidMount () {
@@ -74,6 +75,14 @@ export default class Menu extends React.Component {
         this.setState({
             [entry.target.name]: entry.target.value
         })
+    }
+
+    nameFilter = query => {
+        if(query !== ""){
+            this.props.nameFilter(query)
+        } else {
+            this.clearFilters();
+        }
     };
 
     filterPrice = input => {
@@ -129,6 +138,21 @@ export default class Menu extends React.Component {
                         <button className="center" onClick={input => this.filterPrice(input)}>Enviar</button>
                     </div>
                     
+                </div>
+
+                <h4>Busca</h4>
+                <div className="back">
+                    <div className="price" >
+                        <p >Nome</p>
+                        <input
+                            type = "nameQuery"
+                            name = "nameQuery"
+                            placeholder = ""
+                            value = {this.state.nameQuery}
+                            onChange = { entry => {this.change(entry); this.nameFilter(entry.target.value); } }
+                        />
+                    </div>
+
                 </div>
                 <button className="clearButton" onClick={this.clearFilters}>Limpar Filtros</button>
             </div>

@@ -21,12 +21,14 @@ export default class Produto extends React.Component {
             loading: true
         };
         this.categoryFilter = this.categoryFilter.bind(this);
+        this.nameFilter = this.nameFilter.bind(this);
         this.priceFilter = this.priceFilter.bind(this);
         this.clearFilters = this.clearFilters.bind(this);
 
         this.minPrice = 0;
         this.maxPrice = 10000000;
         this.category = null;
+        this.nameQuery = "";
     }
 
     componentDidMount() {
@@ -82,6 +84,11 @@ export default class Produto extends React.Component {
         this.applyFilters();
     };
 
+    nameFilter(query){
+        this.nameQuery = query;
+        this.applyFilters();
+    }
+
     applyFilters() {
         this.products.length = 0;
 
@@ -94,6 +101,9 @@ export default class Produto extends React.Component {
                 continue;
             }
 
+            if(this.nameQuery != "" && !this.clearProducts[i].description.toUpperCase().includes(this.nameQuery.toUpperCase())){
+                continue;
+            }
             this.products.push(this.clearProducts[i]);
         }
 
@@ -108,6 +118,7 @@ export default class Produto extends React.Component {
         this.category = null;
         this.minPrice = 0;
         this.maxPrice = 10000000;
+        this.nameQuery = "";
 
         this.applyFilters();
     }
@@ -164,7 +175,7 @@ export default class Produto extends React.Component {
 
             <div className='App-body'>
 
-                <Menu categoryFilter={this.categoryFilter} priceFilter={this.priceFilter}
+                <Menu categoryFilter={this.categoryFilter} priceFilter={this.priceFilter} nameFilter={this.nameFilter}
                       clearFilters={this.clearFilters}/>
 
                 <ReactTable
