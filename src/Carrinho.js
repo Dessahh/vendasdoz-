@@ -226,6 +226,7 @@ export default class Carrinho extends React.Component {
 		    	<h4 className="rightSide">{'R$ ' + parseFloat(this.state.total).toFixed(2)}</h4>
 	    	</div>
 	    	<button>Continuar</button>
+            <a href="../pagamento">Pagar</a>
 	    </div>
       </div>
     )
