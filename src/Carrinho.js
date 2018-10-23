@@ -15,15 +15,15 @@ export default class Carrinho extends React.Component {
         this.columns = [];
         this.products = Sessao.getSessionShopCart();
 
-    this.pacValue = 10
-    this.pacPrazo = 5
+        this.pacValue = 10
+        this.pacPrazo = 5
 
-    this.sedexValue = 25
-    this.sedexPrazo = 3
-    
-    this.calcularFrete = this.calcularFrete.bind(this)
-    this.setFrete = this.setFrete.bind(this)
+        this.sedexValue = 25
+        this.sedexPrazo = 3
+        
         this.calcularFrete = this.calcularFrete.bind(this)
+        this.setFrete = this.setFrete.bind(this)
+        
 
     }
 
@@ -49,6 +49,7 @@ export default class Carrinho extends React.Component {
         color: 'white'
       }
     }
+  }
 
   cF () {
       this.setState({
@@ -126,50 +127,8 @@ export default class Carrinho extends React.Component {
                 width: 100
             }
 
-<<<<<<<
+
         ]
-=======
-    ];
->>>>>>>
-
-    let data = this.products
-
-    this.columns = [ // Define Table Columns
-            {
-                Cell: (row) => {
-                    return <Card style={{'display':'flex', 'padding':'10px'}}>
-                        <CardMedia
-                            component="img"
-                            image={data[row.index].images[0] ? data[row.index].images[0].url : null}
-                            height='140'
-                            style={{'width':'initial'}}/>
-                        <div>
-                            <CardContent>
-                                <Typography component="h5" variant="h5" style={{'paddingTop':'3px', 'paddingLeft':'3px'}}>
-                                    {data[row.index].description}
-                                </Typography>
-                                <Typography variant="h5" style={{'padding-bottom':'3px', 'paddingLeft':'3px'}}>
-                                    {'R$ ' + parseFloat(data[row.index].value).toFixed(2)}
-                                </Typography>
-                                <Typography variant="subtitle1" color="textSecondary" style={{'paddingTop':'3px', 'paddingLeft':'3px'}}>
-                                    Fabricante: {data[row.index].manufacturer}
-                                </Typography>
-                                <Typography variant="subtitle1" color="textSecondary" style={{'paddingLeft':'3px'}}>
-                                    Categoria: {data[row.index].type}
-                                </Typography>
-                                <Typography variant="subtitle1" color="textSecondary" style={{'paddingBottom':'3px', 'paddingLeft':'3px'}}>
-                                    Quantidade: {data[row.index].quantity}
-                                </Typography>
-                            </CardContent>
-                        </div>
-                        <div>
-
-                        </div>
-                    </Card>
-                },
-                id: 'images'
-            }
-        ];
 
     return (
       <div className='carrinho'>
@@ -186,24 +145,8 @@ export default class Carrinho extends React.Component {
                         getTheadThProps={this.getTheadThProps}
                         getTdProps={this.getTheadThProps}
 
-<<<<<<<
-                    />
-=======
 
->>>>>>>
-
-<<<<<<<
-                    <input
-                        type="number"
-                        name="cep"
-                        placeholder="CEP"
-                        value={this.state.cep}
-                        onChange={entry => this.change(entry)}
                     />
-                    <button onClick={this.calcularFrete}>Calcular Frete</button>
-=======
-          />
->>>>>>>
 
           <div className="calcularFrete">
 
