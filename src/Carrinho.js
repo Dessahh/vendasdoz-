@@ -26,18 +26,18 @@ export default class Carrinho extends React.Component {
   }
 
   state = {
-	  	cep: '',
-	  	showFrete: false,
-	  	frete: '',
-	  	total: '',
-	  	subtotal: 11.20,
-	}
+      cep: '',
+      showFrete: false,
+      frete: '',
+      total: '',
+      subtotal: 11.20,
+  }
 
   change = entry => {
-		this.setState({
-			[entry.target.name]: entry.target.value
-		})
-	}
+    this.setState({
+      [entry.target.name]: entry.target.value
+    })
+  }
 
   
 
@@ -49,80 +49,81 @@ export default class Carrinho extends React.Component {
     }
   }
 
-  calcularFrete () {
-  		this.setState({
-        	showFrete: true
+  cF () {
+      this.setState({
+          showFrete: true
         })
   }
 
   setFrete (pacBool) {
 
-  	var sum = null
-  	var freteValue = null
+    var sum = null
+    var freteValue = null
 
-  	if (!pacBool) {
-  		sum = this.state.subtotal + this.pacValue
-  		freteValue = this.pacValue
-  		
-  	} else {
-  		sum = this.state.subtotal + this.sedexValue
-  		freteValue = this.sedexValue
-  	}
+    if (!pacBool) {
+      sum = this.state.subtotal + this.pacValue
+      freteValue = this.pacValue
+      
+    } else {
+      sum = this.state.subtotal + this.sedexValue
+      freteValue = this.sedexValue
+    }
 
-  	this.setState ({
-  		total: sum,
-  		frete: freteValue,
-  	})
+    this.setState ({
+      total: sum,
+      frete: freteValue,
+    })
   }
 
-  fetch () {
+  calcularFrete () {
     console.log('Frete query: ', this.state.cep)
 
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/'
-    var targetUrl = `https://shielded-caverns-17296.herokuapp.com/search/frete`
+    var targetUrl = `https://frete-grupo06.herokuapp.com/search`
 
     targetUrl = proxyUrl + targetUrl
 
     return fetch(targetUrl, {
       method: 'POST',
-	      headers: {
-	        Accept: 'application/json',
-	        'Content-Type': 'application/x-www-form-urlencoded'
-	      },
-	      body: JSON.stringify({
-	        CEP: this.state.cep
-	      })
-    }).then((response) => response.json())
-      .then((responseJson) => {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: JSON.stringify({
+          cep: this.state.cep
+        })
+    }).then((response) => {
    
-       	/// TODO: Quando o módulo estiver funcionando
-  	    /// Setar os valores de pacValue, pacPrazo, sedexValue e sedexPrazo
+        console.log(response)
+        /// TODO: Quando o módulo estiver funcionando
+        /// Setar os valores de pacValue, pacPrazo, sedexValue e sedexPrazo
         /// Chamar calcularFrete ou setar showFrete pra true aqui msm 
+       
         
       })
   }
 
   render () {
 
-  	this.colunas = [
-	  	{
-	        Header: 'Image',
-	        Cell: (row) => {
-	          return <div><img height={60} src={row.imageURLs ? row.imageURLs[0] : null} /></div>
-	        },
-	        accessor: 'images',
-	        id: 'image'
-	      },
+    this.colunas = [
+      {
+          Header: 'Image',
+          Cell: (row) => {
+            return <div><img height={60} src={row.imageURLs ? row.imageURLs[0] : null} /></div>
+          },
+          accessor: 'images',
+          id: 'image'
+        },
       { Header: 'Produto', accessor: 'description', width: 400 },
       { Header: 'Quantidade',
-      	Cell: (row) => {
-	          return <div>
-	          	<button>-</button>	
-	         	<p>{row.quantity}</p>
-	         	<button>+</button>	
-	          </div>
-	    },
-      	accessor: 'quantity', width: 100 },
+        Cell: (row) => {
+            return <div>
+              <button>-</button>  
+            <p>{row.quantity}</p>
+            <button>+</button>  
+            </div>
+      },
+        accessor: 'quantity', width: 100 },
       { Header: 'Preço',
         Cell: (row) => {
           return 'R$ ' + parseFloat(row.value).toFixed(2)
@@ -174,60 +175,60 @@ export default class Carrinho extends React.Component {
     return (
       <div className='carrinho'>
 
-      	<div className="leftSide">
+        <div className="leftSide">
 
-	        <h2> Carrinho </h2>
+          <h2> Carrinho </h2>
 
-	        <ReactTable
-	          loading={false}
-	          data={this.products}
-	          columns={this.columns}
-	          pages={1}
-	          getTheadThProps={this.getTheadThProps}
-	          getTdProps={this.getTheadThProps}
+          <ReactTable
+            loading={false}
+            data={this.products}
+            columns={this.columns}
+            pages={1}
+            getTheadThProps={this.getTheadThProps}
+            getTdProps={this.getTheadThProps}
 
 
-	        />
+          />
 
-	        <div className="calcularFrete">
+          <div className="calcularFrete">
 
-		        <input 
-		            type = "number"
-		            name = "cep"
-		            placeholder = "CEP" 
-		            value = {this.state.cep}  
-		            onChange = { entry => this.change(entry) } 
-		        />
-		        <button onClick={this.calcularFrete}>Calcular Frete</button>
+            <input 
+                type = "number"
+                name = "cep"
+                placeholder = "CEP" 
+                value = {this.state.cep}  
+                onChange = { entry => this.change(entry) } 
+            />
+            <button onClick={this.calcularFrete}>Calcular Frete</button>
 
-		        
-		    </div>
+            
+        </div>
 
-		   <FreteBox show={this.state.showFrete} setFrete={this.setFrete} pacValue={this.pacValue} pacPrazo={this.pacPrazo} sedexValue={this.sedexValue} sedexPrazo={this.sedexPrazo}/>
+       <FreteBox show={this.state.showFrete} setFrete={this.setFrete} pacValue={this.pacValue} pacPrazo={this.pacPrazo} sedexValue={this.sedexValue} sedexPrazo={this.sedexPrazo}/>
 
-		    
+        
 
-	    </div>
+      </div>
 
-	    <div className="resumoPedido">
-	    	<h3>Resumo do Pedido</h3>
-	    	<div className="horizontalLayout">
-		    	<p className="leftSide">Subtotal</p>
-		    	<p className="rightSide">{'R$ ' + parseFloat(this.state.subtotal).toFixed(2)}</p>
-		    </div>
-		    <div className="horizontalLayout">
-		    	<p className="leftSide">Frete</p>
-		    	<p className="rightSide">{'R$ ' + parseFloat(this.state.frete).toFixed(2)}</p>
-	    	</div>
+      <div className="resumoPedido">
+        <h3>Resumo do Pedido</h3>
+        <div className="horizontalLayout">
+          <p className="leftSide">Subtotal</p>
+          <p className="rightSide">{'R$ ' + parseFloat(this.state.subtotal).toFixed(2)}</p>
+        </div>
+        <div className="horizontalLayout">
+          <p className="leftSide">Frete</p>
+          <p className="rightSide">{'R$ ' + parseFloat(this.state.frete).toFixed(2)}</p>
+        </div>
 
-	    	<div className="line"></div>
-	    	<div className="horizontalLayout">
-		    	<h4 className="leftSide">Total</h4>
-		    	<h4 className="rightSide">{'R$ ' + parseFloat(this.state.total).toFixed(2)}</h4>
-	    	</div>
-	    	<button>Continuar</button>
-            <a href="../pagamento">Pagar</a>
-	    </div>
+        <div className="line"></div>
+        <div className="horizontalLayout">
+          <h4 className="leftSide">Total</h4>
+          <h4 className="rightSide">{'R$ ' + parseFloat(this.state.total).toFixed(2)}</h4>
+        </div>
+        <button href="../pagamento">Continuar</button>
+            
+      </div>
       </div>
     )
   }
