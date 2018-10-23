@@ -8,6 +8,12 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import FreteBox from './FreteBox.js'
 import Sessao from "./Sessao";
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import IconButton from '@material-ui/core/IconButton';
+import Renew from '@material-ui/icons/Autorenew';
+import MenuItem from '@material-ui/core/MenuItem';
+
 
 export default class Carrinho extends React.Component {
     constructor() {
@@ -23,6 +29,7 @@ export default class Carrinho extends React.Component {
         
         this.calcularFrete = this.calcularFrete.bind(this)
         this.setFrete = this.setFrete.bind(this)
+        this.updateTotalValue = this.updateTotalValue.bind(this)
         
 
     }
@@ -30,9 +37,9 @@ export default class Carrinho extends React.Component {
   state = {
       cep: '',
       showFrete: false,
-      frete: '',
-      total: '',
-      subtotal: 11.20,
+      frete: 0,
+      total: 0,
+      subtotal: 0,
   }
 
   change = entry => {
@@ -41,7 +48,23 @@ export default class Carrinho extends React.Component {
     })
   }
 
-  
+  componentDidMount() {
+    this.updateTotalValue()
+    
+  }
+
+  updateTotalValue () {
+      var subTotalValue = 0
+
+      for (var i in this.products) {
+        subTotalValue = subTotalValue + (this.products[i].cartQuantity * this.products[i].value)
+      }
+
+      this.setState({
+          subtotal: subTotalValue,
+          total: subTotalValue,
+      })
+  }
 
   getTheadThProps (state, rowInfo, column, instance) {
     return {
@@ -105,9 +128,21 @@ export default class Carrinho extends React.Component {
       })
   }
 
+  updateQuantity (index) {
+    console.log(this.products[index].cartQuantity)
+    this.updateTotalValue()
+
+
+  }
+
+  selectQuantity(event, index) {
+        this.products[index].cartQuantity = event.target.value;
+        this.setState({ [event.target.name]: event.target.value });
+  }
+
     render() {
 
-        this.columns = [
+        var colunas = [
             {
                 Header: 'Image',
                 Cell: (row) => {
@@ -126,9 +161,81 @@ export default class Carrinho extends React.Component {
                 accessor: 'value',
                 width: 100
             }
-
-
         ]
+
+      var data = this.products
+
+      this.columns = [ // Define Table Columns
+            {
+                Cell: (row) => {
+                    return <Card style={{'display': 'flex', 'padding': '10px'}}>
+                        <CardMedia
+                            component="img"
+                            image={data[row.index].images[0] ? data[row.index].images[0].url : null}
+                            height='140'
+                            style={{'width': 'initial'}}/>
+                        <div>
+                            <CardContent>
+                                <Typography component="h5" variant="h5"
+                                            style={{'paddingTop': '3px', 'paddingLeft': '3px'}}>
+                                    {data[row.index].description}
+                                </Typography>
+                                <Typography variant="h5" style={{'paddingBottom': '3px', 'paddingLeft': '3px'}}>
+                                    {'R$ ' + parseFloat(data[row.index].value).toFixed(2)}
+                                </Typography>
+                                <Typography variant="subtitle1" color="textSecondary"
+                                            style={{'paddingTop': '3px', 'paddingLeft': '3px'}}>
+                                    Fabricante: {data[row.index].manufacturer}
+                                </Typography>
+                                <Typography variant="subtitle1" color="textSecondary" style={{'paddingLeft': '3px'}}>
+                                    Categoria: {data[row.index].type}
+                                </Typography>
+
+
+                                <FormControl style={{
+                                    'margin': 'theme.spacing.unit',
+                                    'minWidth': '60px'
+
+                                }}>
+
+                                    <Select
+                                        value={this.products[row.index].cartQuantity}
+                                        name="quantity"
+                                        onChange={(event) => this.selectQuantity(event, row.index,)}
+                                        style={{
+                                          'marginTop': 'theme.spacing.unit * 2',
+                                        }}
+                                    >
+                                        <MenuItem value={0}>
+                                            <em>0</em>
+                                        </MenuItem>
+                                        <MenuItem value={1}>1</MenuItem>
+                                        <MenuItem value={2}>2</MenuItem>
+                                        <MenuItem value={3}>3</MenuItem>
+                                        <MenuItem value={4}>4</MenuItem>
+                                        <MenuItem value={5}>5</MenuItem>
+                                        <MenuItem value={6}>6</MenuItem>
+                                        <MenuItem value={7}>7</MenuItem>
+                                        <MenuItem value={8}>8</MenuItem>
+                                        <MenuItem value={9}>9</MenuItem>
+                                        <MenuItem value={10}>10</MenuItem>
+                                    </Select>
+                                </FormControl>
+                                <IconButton color="primary" aria-label="Atualizar Quantidade" onClick={() => this.updateQuantity(row.index)}>
+                                    <Renew/>
+                                </IconButton>
+                                
+                                
+                            </CardContent>
+                        </div>
+                        <div>
+
+                        </div>
+                    </Card>
+                },
+                id: 'images'
+            }
+        ];
 
     return (
       <div className='carrinho'>
@@ -144,7 +251,6 @@ export default class Carrinho extends React.Component {
                         pages={1}
                         getTheadThProps={this.getTheadThProps}
                         getTdProps={this.getTheadThProps}
-
 
                     />
 

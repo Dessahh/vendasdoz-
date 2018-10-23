@@ -9,6 +9,7 @@
 .carrinho h2 {
 	font-family: 'Skia', 'Open Sans Condensed', arial, sans;
 	font-weight: bold;
+	width: 750px;
 }
 
 .tableHeader {
