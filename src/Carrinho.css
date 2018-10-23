@@ -1,6 +1,6 @@
 .carrinho {
 	background-color: rgb(35, 101, 147);
-	height: 1000px;
+	height: 1400px;
   	margin-top: -50px;
   	padding-top: 50px;
   	padding-left: 70px;
@@ -16,21 +16,57 @@
 	display: inline-block;
 }
 
+.calcularFrete {
+	margin-top: 20px;
+}
+
+.calcularFrete input {
+	margin-right: 20px;
+}
+
 .resumoPedido {
 	background-color: #D4DDB8;
 	width: 350px;
-	height: 400px;
-	display: inline-block;
+	height: 300px;
+	
     float: right;
     margin-top: 63px;
-    margin-right: 25px;
+    margin-right: 50px;
     padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 15px;
 }
 
-.resumoPedido h3,
-.resumoPedido h4 {
+.resumoPedido h3 {
 	font-family: 'Skia', 'Open Sans Condensed', arial, sans;
 	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.resumoPedido h4 {
+	font-family: 'Open Sans Condensed', arial, sans;
+	font-weight: bold;
+}
+
+.resumoPedido button {
+	width: 310px;
+	height: 50px;
+	margin-top: 30px;
+	background-color: white;
+	border-width: 3px;
+	border-color: #8C9F4C;
+	font-family: 'Skia', 'Open Sans Condensed', arial, sans;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.resumoPedido button:hover{
+	background-color: #8C9F4C;
+}
+
+.horizontalLayout {
+	width: 310px;
+	height: 30px;
 }
 
 .leftSide {
@@ -38,3 +74,25 @@
     float: left;
 }
 
+.rightSide {
+	display: inline-block;
+    float: right;
+}
+
+.line {
+	background-color: gray;
+	width: 310px;
+	height: 1px;
+	margin-bottom: 0px;
+}
+
+.fretes{
+	margin-top: 20px;
+	padding-top: 10px;
+	padding-left: 10px;
+	background-color: lightgray;
+}
+
+.fretes input {
+	margin-right: 10px;
+}
