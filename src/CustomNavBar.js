@@ -30,6 +30,9 @@ class CustomNavBar extends Component {
                             <NavItem eventKey={4} componentClass={Link} href='/cadastro' to='/carrinho'>
                                 Carrinho
                             </NavItem>
+                            <NavItem eventKey={5} componentClass={Link} href='/usuario' to='/usuario'>
+                                Painel do Usuário
+                            </NavItem>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
@@ -59,9 +62,6 @@ class CustomNavBar extends Component {
                         </NavItem>
                         <NavItem eventKey={4} componentClass={Link} href='/carrinho' to='/carrinho'>
                             Carrinho
-                        </NavItem>
-                        <NavItem eventKey={4} componentClass={Link} href='/usuario' to='/usuario'>
-                            Painel do Usuário
                         </NavItem>
                     </Nav>
                 </Navbar.Collapse>

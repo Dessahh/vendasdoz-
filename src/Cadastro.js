@@ -43,7 +43,39 @@ class Cadastro extends Component {
                     this.confirm(responseJson.registerToken)
                 }
             })
+            .then(() => this.cadastraCredito(input))
     };
+
+    cadastraCredito = input => {
+        var targetUrl = 'http://ec2-54-233-234-42.sa-east-1.compute.amazonaws.com:3001/api/v1/inserir'
+
+
+        return fetch(targetUrl, {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'x-www-formurlencoded',
+            },
+            body: JSON.stringify({
+                email: input.email,
+                senha: input.senha,
+                cpf: input.cpf,
+                nome: input.nome,
+                dataDeNascimento: input.dataDeNascimento,
+                telefone: input.telefone,
+                idGrupo: '1',
+            }),
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                const keys = Object.keys(responseJson)
+                if (keys[0] === 'message') {
+                    this.showModal(responseJson.message)
+                } else {
+                    this.showModal(responseJson.registerToken)
+                    this.confirm(responseJson.registerToken)
+                }
+            })
+    }
 
     confirm = input => {
 
