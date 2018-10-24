@@ -134,25 +134,27 @@ export default class Menu extends React.Component {
                         />
                     </div>
                     
-                    <div className="line">
+                    <div className="back">
                         <button className="center" onClick={input => this.filterPrice(input)}>Enviar</button>
                     </div>
                     
                 </div>
 
+                <div>
                 <h4>Busca</h4>
-                <div className="back">
-                    <div className="price" >
-                        <p >Nome</p>
-                        <input
-                            type = "nameQuery"
-                            name = "nameQuery"
-                            placeholder = ""
-                            value = {this.state.nameQuery}
-                            onChange = { entry => {this.change(entry); this.nameFilter(entry.target.value); } }
-                        />
-                    </div>
+                    <div className="back">
+                        <div className="price" >
+                            <p >Nome</p>
+                            <input
+                                type = "nameQuery"
+                                name = "nameQuery"
+                                placeholder = ""
+                                value = {this.state.nameQuery}
+                                onChange = { entry => {this.change(entry); this.nameFilter(entry.target.value); } }
+                            />
+                        </div>
 
+                    </div>
                 </div>
                 <button className="clearButton" onClick={this.clearFilters}>Limpar Filtros</button>
             </div>

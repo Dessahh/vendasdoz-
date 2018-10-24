@@ -54,9 +54,11 @@
 }
 
 .line {
-  background-color: #D4DDB8;
+  background-color: white;
   width: 240px;
+  height: 100px;
   border: none;
+  margin-bottom: 50px;
 
 }
 
@@ -64,6 +66,7 @@
   width: 80px;
   margin-left: 80px;
   margin-bottom: 20px;
+
 }
 
 
