@@ -1,30 +1,34 @@
 import React, {Component} from 'react';
 import './App.css';
-import CadastroForms from './Forms/CadastroForms.js'
+import UsuarioForms from './Forms/UsuarioForms.js'
 import Modal from './Modal.js'
+import Sessao from './Sessao.js'
 
 class Usuario extends Component {
 
     state = {
         show: false,
+        showedit: false,
         message: '',
     }
 
     editar = input => {
         console.log("Email: ", input.email)
         console.log("CPF: ", input.cpf)
+        console.log("token: ", Sessao.getSessionToken())
 
 
-        var targetUrl = 'http://ec2-18-231-28-232.sa-east-1.compute.amazonaws.com:3002/register'
+        var targetUrl = 'http://ec2-18-231-28-232.sa-east-1.compute.amazonaws.com:3002/users/' + input.cpf + '/update'
 
 
         return fetch(targetUrl, {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+                tokenSessao: Sessao.getSessionToken(),
                 email: input.email,
                 senha: input.senha,
                 cpf: input.cpf,
@@ -40,41 +44,14 @@ class Usuario extends Component {
                     this.showModal(responseJson.message)
                 } else {
                     this.showModal(responseJson.registerToken)
-                    this.confirm(responseJson.registerToken)
                 }
             })
     };
 
-    confirm = input => {
-
-        const token = input.split(':')[1];
-        console.log("Token:", token);
-
-        var targetUrl = 'http://ec2-18-231-28-232.sa-east-1.compute.amazonaws.com:3002/confirm'
-
-        return fetch(targetUrl, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                registerToken: input,
-            }),
-        }).then((response) => response.json())
-            .then((responseJson) => {
-                const keys = Object.keys(responseJson)
-
-                if (keys[0] === 'message') {
-                    console.log(responseJson.message)
-                } else {
-                    console.log(responseJson)
-                }
-            })
-
-
+    change = boolean => {
+        this.setState({showedit: boolean});
     };
-
+    
     showModal = (message) => {
         this.setState({
             message: message,
@@ -90,9 +67,10 @@ class Usuario extends Component {
 
 
                 <div className='App-body'>
+                    <input type="button" value="Editar" onClick={this.change(true)} />
 
+                    { this.state.showedit ? <UsuarioForms editar={input => this.editar(input)}/>  : null }
 
-                    <UsuarioForms editar={input => this.editar(input)}/>
 
                     <Modal
                         onClose={this.showModal}
