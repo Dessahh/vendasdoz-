@@ -4,6 +4,7 @@ import ReactTable from 'react-table'
 import FreteBox from './FreteBox.js'
 import Sessao from "./Sessao";
 import ProdutoItem from "./ProdutoItem";
+import Link from "react-router-dom/es/Link";
 
 export default class Carrinho extends React.Component {
     constructor() {
@@ -97,7 +98,7 @@ export default class Carrinho extends React.Component {
     calcularSubTotal() {
         let subtotal = this.subTotal();
 
-        const total = subtotal+this.state.frete;
+        const total = subtotal + this.state.frete;
 
         this.setState({
             subtotal: subtotal,
@@ -159,6 +160,7 @@ export default class Carrinho extends React.Component {
                         data={products}
                         columns={this.columns}
                         pages={1}
+                        pageSize={products.length === 0 ? 5 : products.length}
                         getTheadThProps={this.getTheadThProps}
                         getTdProps={this.getTheadThProps}
                         style={{'min-width': '700px'}}
@@ -172,7 +174,7 @@ export default class Carrinho extends React.Component {
 
                 </div>
 
-                <div style={{'display':'grid', 'padding-left':'20px'}}>
+                <div style={{'display': 'grid', 'padding-left': '20px'}}>
                     <div className="resumoPedido">
                         <h3>Resumo do Pedido</h3>
                         <div className="horizontalLayout">
@@ -189,7 +191,11 @@ export default class Carrinho extends React.Component {
                             <h4 className="leftSide">Total</h4>
                             <h4 className="rightSide">{'R$ ' + parseFloat(total).toFixed(2)}</h4>
                         </div>
-                        <button href="../pagamento">Continuar</button>
+                        <button>
+                            <Link to='/pagamento'>
+                                Continuar
+                            </Link>
+                        </button>
 
                     </div>
 

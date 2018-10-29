@@ -166,6 +166,7 @@ export default class Produto extends React.Component {
                     data={data}
                     columns={this.columns}
                     pages={pages}
+                    pageSize={data.length > 10 ? 10 : data.length === 0 ? 5 : data.length}
                     getTheadThProps={this.getTheadThProps}
                     getTdProps={this.getTheadThProps}
 
