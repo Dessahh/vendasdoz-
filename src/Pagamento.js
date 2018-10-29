@@ -69,7 +69,7 @@ export default class Pagamento extends React.Component {
                 'Content-Type': 'x-www-formurlencoded',
             },
             body: JSON.stringify({
-                cpf: input.cpf,
+                cpf: Sessao.CPF_KEY,
                 score: 700
             }),
         }).then((response) => response.json())

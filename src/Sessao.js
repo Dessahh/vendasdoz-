@@ -80,7 +80,7 @@ export default class Sessao extends React.Component {
                     },
                     body: JSON.stringify({
                         score: 500,
-                        cpf: input.cpf
+                        cpf: Sessao.CPF_KEY
                     }),
                 }).then((response) => response.json())
                     .then((responseJson) => {
