@@ -1,5 +1,6 @@
 import React from 'react'
 import './Carrinho.css'
+import './Pagamento.css'
 import ReactTable from 'react-table'
 
 export default class Pagamento extends React.Component {
@@ -9,11 +10,26 @@ export default class Pagamento extends React.Component {
     this.products = []
 
     this.calcularFrete = this.calcularFrete.bind(this)
+    this.pay = this.pay.bind(this)
 
   }
 
   state = {
-	  	cep: '',
+      metodo: 'cartao',
+      cep: '',
+      cpf:'',
+      valor:123.45,
+      cnpj_site: '123321',
+      data_emissao_pedido : new Date(),
+      num_cartao : null,
+      nome_cartao : null,
+      cvv_cartao : null,
+      data_vencimento_cartao : null,
+      credito: null,
+      num_parcelas: null,
+      banco_gerador_boleto : "Banco do Brasil",
+      data_vencimento_boleto : new Date(),
+      endereco_fisico_site : "Rua Joaquim 123"
 	}
 
   change = entry => {
@@ -29,6 +45,7 @@ export default class Pagamento extends React.Component {
       }
     }
   }
+
 
   calcularFrete () {
     console.log('Frete query: ', this.state.cep)
@@ -53,6 +70,54 @@ export default class Pagamento extends React.Component {
         console.log(keys[0])
         console.log(responseJson.response)
       })
+  }
+
+  pay () {
+      alert("Efetuando pagamento!")
+
+      var targetUrl = 'http://pagamento.4pmv2bgufu.sa-east-1.elasticbeanstalk.com/servico/';
+      var body = {
+          cpf_comprador: this.state.cpf,
+          valor_compra: this.state.valor,
+          cnpj_site: this.state.cnpj_site,
+          data_emissao_pedido: new Date()
+      };
+      var cardInfo;
+      if(this.state.metodo == 'cartao'){
+          targetUrl += 'pagamento_cartao';
+          cardInfo = {
+              num_cartao: this.state.num_cartao,
+              nome_cartao: this.state.nome_cartao,
+              cvv_cartao: this.state.cvv_cartao,
+              data_vencimento_cartao: this.state.data_vencimento_cartao,
+              credito: this.state.credito,
+              num_parcelas: this.state.num_parcelas
+          };
+      } else { // boleto
+          targetUrl += 'pagamento_boleto';
+          cardInfo = {
+              banco_gerador_boleto: this.state.banco_gerador_boleto,
+              data_vencimento_boleto: this.state.data_vencimento_boleto,
+              endereco_fisico_site: this.state.endereco_fisico_site
+
+          };
+      }
+      for(var p in cardInfo) body[p] = cardInfo[p];
+
+      var encodeCredentials = btoa('endereco:ZKUS7FGH');
+
+      console.log('Initiating payment');
+
+      return fetch(targetUrl, {
+          method: 'POST',
+          headers: {
+          },
+          body: JSON.stringify(body)
+      }).then((response) => response.json())
+          .then((responseJson) => {
+              console.dir('ResponseJson: ' + responseJson);
+              this.state.data = responseJson.pk_pedido;
+          });
   }
 
   render () {
@@ -94,22 +159,111 @@ export default class Pagamento extends React.Component {
 
 	        />
 
-	        <input 
+	        <input
 	            type = "number"
 	            name = "cep"
-	            placeholder = "CEP" 
-	            value = {this.state.cep}  
-	            onChange = { entry => this.change(entry) } 
+	            placeholder = "CEP"
+	            value = {this.state.cep}
+	            onChange = { entry => this.change(entry) }
 	        />
 	        <button onClick={this.calcularFrete}>Calcular Frete</button>
 
 	    </div>
 
-	    <div className="resumoPedido">
+	    <div className="infoPedido">
             <h3>Detalhes do Pagamento</h3>
 
+            <label>CPF</label>
+            <input
+                type = "cpf"
+                name = "cpf"
+                placeholder = "CPF"
+                value = {this.state.cpf}
+                onChange = { entry => this.change(entry) }
+            /><br/>
 
-	    </div>
+            <label>Valor</label>
+            <input
+                type = "valor"
+                name = "valor"
+                placeholder = "Valor"
+                value = {this.state.valor}
+                onChange = { entry => this.change(entry) }
+            /><br/>
+
+            <label>Cartão ou Boleto?</label>
+            <select
+                type = "metodo"
+                name = "metodo"
+                value = {this.state.metodo}
+                onChange = { entry => this.change(entry) }
+            >
+                <option value='cartao'>Cartão
+                </option>
+                <option value='boleto'>Boleto
+                </option>
+            </select><br/>
+
+            {this.state.metodo=='cartao' && <div>
+                <label >Número Cartão</label>
+                <input
+                    type = "num_cartao"
+                    name = "num_cartao"
+                    placeholder = "0000.0000.0000.0000"
+                    value = {this.state.num_cartao}
+                    onChange = { entry => this.change(entry) }
+                /><br/>
+
+                <label>Nome Cartão</label>
+                <input
+                    type = "nome_cartao"
+                    name = "nome_cartao"
+                    placeholder = "Joao da Silva"
+                    value = {this.state.nome_cartao}
+                    onChange = { entry => this.change(entry) }
+                /><br/>
+
+                <label>CVV do cartão</label>
+                <input
+                    type = "cvv_cartao"
+                    name = "cvv_cartao"
+                    placeholder = "CVV"
+                    value = {this.state.cvv_cartao}
+                    onChange = { entry => this.change(entry) }
+                /><br/>
+
+                <label>Data de Vencimento do Cartão</label>
+                <input
+                    type = "data_vencimento_cartao"
+                    name = "data_vencimento_cartao"
+                    placeholder = "MM/AAAA"
+                    value = {this.state.data_vencimento_cartao}
+                    onChange = { entry => this.change(entry) }
+                /><br/>
+
+                <label>Crédito ou débito</label>
+                <input
+                    type = "credito"
+                    name = "credito"
+                    placeholder = "Credito"
+                    value = {this.state.credito}
+                    onChange = { entry => this.change(entry) }
+                /><br/>
+
+                <label>Números de Parcelas</label>
+                <input
+                    type = "parcelas"
+                    name = "parcelas"
+                    placeholder = "10"
+                    max="12"
+                    value = {this.state.num_parcelas}
+                    onChange = { entry => this.change(entry) }
+                /><br/>
+            </div>
+            }
+
+            <button className="payButton" onClick={this.pay}>Pagar</button>
+        </div>
       </div>
     )
   }

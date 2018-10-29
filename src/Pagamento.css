@@ -1,0 +1,30 @@
+.payButton {
+	background-color: white;
+	font-weight: bolder;
+	padding: 13px;
+	margin: 25px;
+	font-size: 15px;
+	font-family:  "Avenir", 'Open Sans';
+	border: none;
+	width: 80%;
+	text-align: center;
+}
+
+.infoPedido {
+	background-color: #D4DDB8;
+	width: 350px;
+	height: 500px;
+	display: inline-block;
+	float: right;
+	margin-top: 63px;
+	margin-right: 25px;
+	padding-left: 20px;
+	text-align: center;
+	font-family:  "Avenir", 'Open Sans';
+}
+
+.infoPedido label {
+	font-weight: bold;
+	width: 50%;
+	text-align: center;
+}
