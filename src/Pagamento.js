@@ -1,5 +1,6 @@
 import React from 'react'
 import './Carrinho.css'
+import Sessao from './Sessao.js'
 import ReactTable from 'react-table'
 
 export default class Pagamento extends React.Component {
