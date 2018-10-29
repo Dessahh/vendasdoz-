@@ -69,8 +69,19 @@ export default class Sessao extends React.Component {
         return Sessao.shopCart;
     }
 
-    static addProductToShopCart(product, quantity) {
+    static addProductToShopCart(product) {
         Sessao.shopCart.push(product);
+    }
+
+    static removeProductFromShopCart(product) {
+        let cart = [];
+        for (let i in Sessao.shopCart) {
+            if (product.id !== Sessao.shopCart[i].id) {
+                cart.push(Sessao.shopCart[i].id);
+            }
+        }
+
+        Sessao.shopCart = cart;
     }
 
     render() {

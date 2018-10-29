@@ -75,7 +75,7 @@ export default class Menu extends React.Component {
         this.setState({
             [entry.target.name]: entry.target.value
         })
-    }
+    };
 
     nameFilter = query => {
         if(query !== ""){
