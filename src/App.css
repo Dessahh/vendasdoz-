@@ -33,9 +33,11 @@
 
 .App-body {
   background-color: rgb(35, 101, 147);
-  height: 2000px;
+  height: fit-content;
   margin-top: -50px;
   padding-top: 100px;
+  padding-bottom: 30px;
+  min-height: 1200px;
 }
 
 .Blue-Rectangle{
