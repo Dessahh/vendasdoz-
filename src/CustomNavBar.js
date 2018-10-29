@@ -24,13 +24,10 @@ class CustomNavBar extends Component {
                             <NavItem eventKey={1} componentClass={Link} href='/' to='/'>
                                 Home
                             </NavItem>
-                            <NavItem eventKey={2} componentClass={Link} href='/usuario' to='/usuario'>
-                                {Sessao.getSessionUser() ? Sessao.getSessionUser().nome : 'Nome Usuario'}
-                            </NavItem>
-                            <NavItem eventKey={4} componentClass={Link} href='/cadastro' to='/carrinho'>
+                            <NavItem eventKey={2} componentClass={Link} href='/cadastro' to='/carrinho'>
                                 Carrinho
                             </NavItem>
-                            <NavItem eventKey={5} componentClass={Link} href='/usuario' to='/usuario'>
+                            <NavItem eventKey={3} componentClass={Link} href='/usuario' to='/usuario'>
                                 Painel do Usuário
                             </NavItem>
                         </Nav>

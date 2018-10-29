@@ -28,7 +28,8 @@ export default class Carrinho extends React.Component {
             frete: 0.00,
             total: 0.00,
             subtotal: 0.00,
-            products: Sessao.getSessionShopCart()
+            products: Sessao.getSessionShopCart(),
+            userscore: 500,
         };
 
         this.state.total = this.subTotal();
@@ -148,6 +149,9 @@ export default class Carrinho extends React.Component {
             }
         ];
 
+        this.setState( {userscore: Sessao.getUserScore()});
+
+
         return (
             <div className='carrinho'>
 
@@ -192,9 +196,9 @@ export default class Carrinho extends React.Component {
                             <h4 className="rightSide">{'R$ ' + parseFloat(total).toFixed(2)}</h4>
                         </div>
                         <button>
-                            <Link to='/pagamento'>
+                            {(total < 2000 || this.state.userscore >= 500) ? <Link to='/pagamento'>
                                 Continuar
-                            </Link>
+                            </Link> : <h4>Seu crédito atual não permite essa compra</h4> }
                         </button>
 
                     </div>

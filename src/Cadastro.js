@@ -43,11 +43,14 @@ class Cadastro extends Component {
                     this.confirm(responseJson.registerToken)
                 }
             })
-            .then(() => this.cadastraCredito(input))
+            .then(() => { this.cadastraCredito(input); })
     };
 
     cadastraCredito = input => {
-        var targetUrl = 'http://ec2-54-233-234-42.sa-east-1.compute.amazonaws.com:3001/api/v1/inserir'
+
+        var url = 'http://ec2-54-233-234-42.sa-east-1.compute.amazonaws.com:3001/api/v1/inserir'
+        var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+        var targetUrl = proxyUrl + url;
 
 
         return fetch(targetUrl, {
@@ -57,23 +60,13 @@ class Cadastro extends Component {
                 'Content-Type': 'x-www-formurlencoded',
             },
             body: JSON.stringify({
-                email: input.email,
-                senha: input.senha,
-                cpf: input.cpf,
-                nome: input.nome,
-                dataDeNascimento: input.dataDeNascimento,
-                telefone: input.telefone,
-                idGrupo: '1',
+                score: 500,
+                cpf: input.cpf
             }),
         }).then((response) => response.json())
             .then((responseJson) => {
-                const keys = Object.keys(responseJson)
-                if (keys[0] === 'message') {
-                    this.showModal(responseJson.message)
-                } else {
-                    this.showModal(responseJson.registerToken)
-                    this.confirm(responseJson.registerToken)
-                }
+                console.log('tentou registrar cred :');
+                console.log(responseJson);
             })
     }
 

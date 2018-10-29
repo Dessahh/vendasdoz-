@@ -65,6 +65,33 @@ export default class Sessao extends React.Component {
         return Sessao.token;
     }
 
+    static getUserScore(){
+        if(!Sessao.userscore){
+                var url = 'http://ec2-54-233-234-42.sa-east-1.compute.amazonaws.com:3001/api/v1/consulta'
+                var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+                var targetUrl = proxyUrl + url;
+
+
+                return fetch(targetUrl, {
+                    method: 'PUT',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'x-www-formurlencoded',
+                    },
+                    body: JSON.stringify({
+                        score: 500,
+                        cpf: input.cpf
+                    }),
+                }).then((response) => response.json())
+                    .then((responseJson) => {
+                        console.log('tentou registrar cred :');
+                        console.log(responseJson);
+                        //Sessao.userscore = responseJson[0].score
+                    })
+            }
+
+    }
+
     static getSessionShopCart() {
         return Sessao.shopCart;
     }

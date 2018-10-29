@@ -55,6 +55,30 @@ export default class Pagamento extends React.Component {
       })
   }
 
+    aumentaCredito = input => {
+
+        var url = 'http://ec2-54-233-234-42.sa-east-1.compute.amazonaws.com:3001/api/v1/update'
+        var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+        var targetUrl = proxyUrl + url;
+
+
+        return fetch(targetUrl, {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'x-www-formurlencoded',
+            },
+            body: JSON.stringify({
+                cpf: input.cpf,
+                score: 700
+            }),
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                console.log('tentou registrar cred :');
+                console.log(responseJson);
+            })
+    }
+
   render () {
 
   	this.columns = [

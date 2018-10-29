@@ -13,7 +13,7 @@ class Usuario extends Component {
     }
     static user = {email: "input.email",
         senha: "input.senha",
-        cpf: '11111111111',
+        cpf: 'cpf',
         nome: "input.nome",
         dataDeNascimento: "1995-03-10",
         telefone: "112222",
@@ -36,9 +36,10 @@ class Usuario extends Component {
     * { this.state.showedit ? <UsuarioForms editar = {(e) => this.editar(e)}/>  : null }*/
 
     render() {
-        //Usuario.user = Sessao.getSessionUser();
+        Usuario.user = Sessao.getSessionUser();
+        console.log("cpf deu " + Sessao.CPF_KEY);
+        Usuario.user.cpf = Sessao.CPF_KEY;
         console.log(Usuario.user);
-        if(Sessao.user){
             return (
                 <div className='App'>
 
@@ -59,7 +60,6 @@ class Usuario extends Component {
                 </div>
         )}
 
-    }
 }
 
 export default Usuario

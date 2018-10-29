@@ -34,9 +34,10 @@ class CadastroForms extends React.Component {
             return;
         }
 
-        // var url = `http://wsendereco.tk`;
-        var url = `http://localhost:5000`;
-        var targetUrl = `${url}/api/enderecos/cep/${entry.target.value}`;
+         var url = `http://wsendereco.tk`;
+        //var url = `http://localhost:5000`;
+        var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+        var targetUrl = proxyUrl + `${url}/api/enderecos/cep/${entry.target.value}`;
 
         console.log('Initiating cep search');
 
@@ -50,17 +51,19 @@ class CadastroForms extends React.Component {
             return response.json()
                 .then((responseJson) => {
                     console.dir('ResponseJson: ' + responseJson);
-                    if (!responseJson || !responseJson[0]) {
+                    if (!responseJson || !responseJson['Endereco'][0]) {
                         return;
                     }
 
                     this.setState({
-                        cep: responseJson[0].cep,
-                        logradouro: responseJson[0].logradouro,
-                        bairro: responseJson[0].bairro,
-                        cidade: responseJson[0].cidade,
-                        estado: responseJson[0].estado
+                        cep: responseJson['Endereco'][0].cep,
+                        logradouro: responseJson['Endereco'][0].logradouro,
+                        bairro: responseJson['Endereco'][0].bairro,
+                        cidade: responseJson['Endereco'][0].cidade,
+                        estado: responseJson['Endereco'][0].estado
                     });
+
+                    console.log(this.state);
                 })
         });
     };

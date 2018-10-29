@@ -102,6 +102,7 @@ class UsuarioForms extends React.Component {
                     onChange={entry => this.change(entry)}
                 />
                 <br/>
+                {/*
                 <h3>Senha</h3>
                 <input
                     type="password"
@@ -109,7 +110,7 @@ class UsuarioForms extends React.Component {
                     placeholder="Senha"
                     value={Usuario.user.senha}
                     onChange={entry => this.change(entry)}
-                />
+                />*/}
                 <br/>
                 <h3>CPF</h3>
                 <input
