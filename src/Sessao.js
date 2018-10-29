@@ -6,6 +6,7 @@ export default class Sessao extends React.Component {
     static TOKEN_KEY = 'token';
 
     static user = {};
+    static userscore = 0;
     static token = '';
     static shopCart = [];
 
@@ -67,29 +68,23 @@ export default class Sessao extends React.Component {
 
     static getUserScore(){
         if(!Sessao.userscore){
-                var url = 'http://ec2-54-233-234-42.sa-east-1.compute.amazonaws.com:3001/api/v1/consulta'
-                var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+             //var url = `http://ec2-54-233-234-42.sa-east-1.compute.amazonaws.com:3000/api/v1/score/${Sessao.CPF_KEY}`;
+            var url = `http://ec2-54-233-234-42.sa-east-1.compute.amazonaws.com:3000/api/v1/score/66666666666`;
+            var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
                 var targetUrl = proxyUrl + url;
 
-
-                return fetch(targetUrl, {
-                    method: 'PUT',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'x-www-formurlencoded',
-                    },
-                    body: JSON.stringify({
-                        score: 500,
-                        cpf: Sessao.CPF_KEY
-                    }),
-                }).then((response) => response.json())
-                    .then((responseJson) => {
-                        console.log('tentou registrar cred :');
-                        console.log(responseJson);
-                        //Sessao.userscore = responseJson[0].score
-                    })
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },}).then((response) => response.json()).then((responseJson) => {
+                        console.log('tentou consultar cred :');
+                        console.log(responseJson.score);
+                        Sessao.userscore = parseInt(responseJson.score);
+                    });
             }
-
+            return Sessao.userscore;
+        //return 400;
     }
 
     static getSessionShopCart() {

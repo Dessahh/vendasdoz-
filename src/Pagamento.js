@@ -58,7 +58,7 @@ export default class Pagamento extends React.Component {
 
     aumentaCredito = input => {
 
-        var url = 'http://ec2-54-233-234-42.sa-east-1.compute.amazonaws.com:3001/api/v1/update'
+        var url = 'http://ec2-54-233-234-42.sa-east-1.compute.amazonaws.com:3000/api/v1/pagamento'
         var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
         var targetUrl = proxyUrl + url;
 
@@ -67,12 +67,13 @@ export default class Pagamento extends React.Component {
             method: 'PUT',
             headers: {
                 Accept: 'application/json',
-                'Content-Type': 'x-www-formurlencoded',
+                'Content-Type': 'application/x-www-formurlencoded',
             },
-            body: JSON.stringify({
+            form: {
                 cpf: Sessao.CPF_KEY,
-                score: 700
-            }),
+                valor: 9000,
+                loja: 'Vendas do Zé'
+            },
         }).then((response) => response.json())
             .then((responseJson) => {
                 console.log('tentou registrar cred :');

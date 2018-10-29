@@ -16,6 +16,7 @@ export default class Carrinho extends React.Component {
 
         this.sedexValue = 25;
         this.sedexPrazo = 3;
+        this.userscore = 400;
 
         this.calcularSubTotal = this.calcularSubTotal.bind(this);
         this.calcularFrete = this.calcularFrete.bind(this);
@@ -29,7 +30,6 @@ export default class Carrinho extends React.Component {
             total: 0.00,
             subtotal: 0.00,
             products: Sessao.getSessionShopCart(),
-            userscore: 500,
         };
 
         this.state.total = this.subTotal();
@@ -149,7 +149,11 @@ export default class Carrinho extends React.Component {
             }
         ];
 
-        this.setState( {userscore: Sessao.getUserScore()});
+        if(Sessao.getSessionUser()){
+            this.userscore = Sessao.getUserScore();
+        }
+
+        console.log('carrinho userscore: ' + this.userscore);
 
 
         return (
@@ -196,9 +200,9 @@ export default class Carrinho extends React.Component {
                             <h4 className="rightSide">{'R$ ' + parseFloat(total).toFixed(2)}</h4>
                         </div>
                         <button>
-                            {(total < 2000 || this.state.userscore >= 500) ? <Link to='/pagamento'>
+                            {(total < 3500 || this.userscore >= 600) ? <Link to='/pagamento'>
                                 Continuar
-                            </Link> : <h4>Seu crédito atual não permite essa compra</h4> }
+                            </Link> : 'Seu crédito está baixo demais' }
                         </button>
 
                     </div>

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import CadastroForms from './Forms/CadastroForms.js'
 import Modal from './Modal.js'
+import Sessao from './Sessao.js'
 
 class Cadastro extends Component {
 
@@ -48,7 +49,7 @@ class Cadastro extends Component {
 
     cadastraCredito = input => {
 
-        var url = 'http://ec2-54-233-234-42.sa-east-1.compute.amazonaws.com:3001/api/v1/inserir'
+        var url = 'http://ec2-54-233-234-42.sa-east-1.compute.amazonaws.com:3000/api/v1/inserir'
         var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
         var targetUrl = proxyUrl + url;
 
@@ -56,13 +57,13 @@ class Cadastro extends Component {
         return fetch(targetUrl, {
             method: 'PUT',
             headers: {
-                Accept: 'application/json',
-                'Content-Type': 'x-www-formurlencoded',
+                Accept: 'text/html',
+                'Content-Type': 'application/x-www-formurlencoded',
             },
-            body: JSON.stringify({
+            form: {
                 score: 500,
-                cpf: input.cpf
-            }),
+                cpf: Sessao.CPF_KEY
+            },
         }).then((response) => response.json())
             .then((responseJson) => {
                 console.log('tentou registrar cred :');
