@@ -75,7 +75,7 @@ export default class Menu extends React.Component {
         this.setState({
             [entry.target.name]: entry.target.value
         })
-    }
+    };
 
     nameFilter = query => {
         if(query !== ""){
@@ -105,43 +105,10 @@ export default class Menu extends React.Component {
     render() {
         return (
 
+
             <div className='sideBar'>
-                <h4>Categorias</h4>  
-                    {this.categorys.map((category, index) => 
-                        <button className={this.buttonStyles[index]} key={index} onClick={() => this.categoryFilter(category, index)}>{this.capitalize(category)}</button>
-                    )}
-
-                <h4>Preço</h4>
-                <div className="back">
-                    <div className="price" > 
-                        <p >Min</p>
-                        <input 
-                            type = "min"
-                            name = "min"
-                            placeholder = "" 
-                            value = {this.state.min}  
-                            onChange = { entry => this.change(entry) } 
-                        />
-                    </div>
-                    <div className="price"> 
-                        <p>Max</p>
-                        <input 
-                            type = "max"
-                            name = "max"
-                            placeholder = "" 
-                            value = {this.state.max}  
-                            onChange = { entry => this.change(entry) } 
-                        />
-                    </div>
-                    
-                    <div className="back">
-                        <button className="center" onClick={input => this.filterPrice(input)}>Enviar</button>
-                    </div>
-                    
-                </div>
-
                 <div>
-                <h4>Busca</h4>
+                    <h4>Busca</h4>
                     <div className="back">
                         <div className="price" >
                             <p >Nome</p>
@@ -156,6 +123,40 @@ export default class Menu extends React.Component {
 
                     </div>
                 </div>
+
+                <h4>Preço</h4>
+                <div className="back">
+                    <div className="price" >
+                        <p >Min</p>
+                        <input
+                            type = "min"
+                            name = "min"
+                            placeholder = ""
+                            value = {this.state.min}
+                            onChange = { entry => this.change(entry) }
+                        />
+                    </div>
+                    <div className="price">
+                        <p>Max</p>
+                        <input
+                            type = "max"
+                            name = "max"
+                            placeholder = ""
+                            value = {this.state.max}
+                            onChange = { entry => this.change(entry) }
+                        />
+                    </div>
+
+                    <div className="back">
+                        <button className="center" onClick={input => this.filterPrice(input)}>Enviar</button>
+                    </div>
+
+                </div>
+
+                <h4>Categorias</h4>  
+                    {this.categorys.map((category, index) => 
+                        <button className={this.buttonStyles[index]} key={index} onClick={() => this.categoryFilter(category, index)}>{this.capitalize(category)}</button>
+                    )}
                 <button className="clearButton" onClick={this.clearFilters}>Limpar Filtros</button>
             </div>
 

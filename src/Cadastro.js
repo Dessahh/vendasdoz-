@@ -8,7 +8,7 @@ class Cadastro extends Component {
     state = {
         show: false,
         message: '',
-    }
+    };
 
     cadastrar = input => {
         console.log("Email: ", input.email)
