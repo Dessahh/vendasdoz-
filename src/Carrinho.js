@@ -11,11 +11,7 @@ export default class Carrinho extends React.Component {
         super();
         this.columns = [];
 
-        this.pacValue = 10;
-        this.pacPrazo = 5;
-
-        this.sedexValue = 25;
-        this.sedexPrazo = 3;
+        
         this.userscore = 400;
 
         this.calcularSubTotal = this.calcularSubTotal.bind(this);
@@ -30,6 +26,11 @@ export default class Carrinho extends React.Component {
             total: 0.00,
             subtotal: 0.00,
             products: Sessao.getSessionShopCart(),
+            pacValue: '',
+            pacPrazo: '',
+
+            sedexValue: '',
+            sedexPrazo: '',
         };
 
         this.state.total = this.subTotal();
@@ -54,12 +55,12 @@ export default class Carrinho extends React.Component {
         var freteValue = null;
 
         if (!pacBool) {
-            sum = this.state.subtotal + this.pacValue;
-            freteValue = this.pacValue
+            sum = this.state.subtotal + this.state.pacValue;
+            freteValue = this.state.pacValue
 
         } else {
-            sum = this.state.subtotal + this.sedexValue;
-            freteValue = this.sedexValue
+            sum = this.state.subtotal + this.state.sedexValue;
+            freteValue = this.state.sedexValue
         }
 
         this.setState({
@@ -71,23 +72,34 @@ export default class Carrinho extends React.Component {
     calcularFrete() {
         console.log('Frete query: ', this.state.cep);
 
-        var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-        var targetUrl = `https://frete-grupo06.herokuapp.com/search`;
-
-        targetUrl = proxyUrl + targetUrl;
+        var targetUrl = `https://shielded-caverns-17296.herokuapp.com/frete`;
 
         return fetch(targetUrl, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                cep: this.state.cep
+                CEP: this.state.cep
             })
-        }).then((response) => {
+        }).then((response) => response.json())
+      .then((responseJson) =>{
 
-            console.log(response)
+            console.log(responseJson.pacPrice)
+            console.log(responseJson.pacTime)
+            console.log(responseJson.sedexPrice)
+            console.log(responseJson.sedexTime)
+
+            this.setState ({
+
+              pacValue: responseJson.pacPrice,
+              pacPrazo: responseJson.pacTime,
+              sedexValue: responseJson.sedexPrice,
+              sedexPrazo: responseJson.sedexTime,
+              showFrete: true,
+
+            })
             /// TODO: Quando o módulo estiver funcionando
             /// Setar os valores de pacValue, pacPrazo, sedexValue e sedexPrazo
             /// Chamar calcularFrete ou setar showFrete pra true aqui msm
@@ -176,8 +188,8 @@ export default class Carrinho extends React.Component {
 
                     />
 
-                    <FreteBox show={this.state.showFrete} setFrete={this.setFrete} pacValue={this.pacValue}
-                              pacPrazo={this.pacPrazo} sedexValue={this.sedexValue} sedexPrazo={this.sedexPrazo}/>
+                    <FreteBox show={this.state.showFrete} setFrete={this.setFrete} pacValue={this.state.pacValue}
+                              pacPrazo={this.state.pacPrazo} sedexValue={this.state.sedexValue} sedexPrazo={this.state.sedexPrazo}/>
 
 
                 </div>
