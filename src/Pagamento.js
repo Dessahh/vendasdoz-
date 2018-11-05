@@ -30,7 +30,8 @@ export default class Pagamento extends React.Component {
       num_parcelas: null,
       banco_gerador_boleto : "Banco do Brasil",
       data_vencimento_boleto : new Date(),
-      endereco_fisico_site : "Rua Joaquim 123"
+      endereco_fisico_site : "Rua Joaquim 123",
+      nome_site : "Vendas do Zé"
 	}
 
   change = entry => {
@@ -119,29 +120,33 @@ export default class Pagamento extends React.Component {
           .then((responseJson) => {
               console.dir('ResponseJson: ' + responseJson);
               this.state.data = responseJson.pk_pedido;
+              this.aumentaCredito();
               alert("Pagamento efetuado com sucesso!");
               this.props.history.push('/');
           });
   }
 
-    aumentaCredito = input => {
+    aumentaCredito () {
 
         var url = 'http://ec2-54-233-234-42.sa-east-1.compute.amazonaws.com:3000/api/v1/pagamento'
         var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
         var targetUrl = proxyUrl + url;
 
+        var formBody = [];
+        for (var property in details) {
+            var encodedKey = encodeURIComponent(property);
+            var encodedValue = encodeURIComponent(details[property]);
+            formBody.push(encodedKey + "=" + encodedValue);
+        }
+        formBody = formBody.join("&");
 
         return fetch(targetUrl, {
             method: 'PUT',
             headers: {
                 Accept: 'application/json',
-                'Content-Type': 'application/x-www-formurlencoded',
+                'Content-Type': 'application/x-www-form-urlencoded',
             },
-            form: {
-                cpf: Sessao.CPF_KEY,
-                valor: 9000,
-                loja: 'Vendas do Zé'
-            },
+            body: formBody,
         }).then((response) => response.json())
             .then((responseJson) => {
                 console.log('tentou registrar cred :');
