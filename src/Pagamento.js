@@ -75,7 +75,9 @@ export default class Pagamento extends React.Component {
   pay () {
       alert("Efetuando pagamento!");
 
-      var targetUrl = 'http://pagamento.4pmv2bgufu.sa-east-1.elasticbeanstalk.com/servico/';
+      var url = 'http://pagamento.4pmv2bgufu.sa-east-1.elasticbeanstalk.com/servico/';
+      var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+      var targetUrl = proxyUrl + url;
       var body = {
           cpf_comprador: this.state.cpf,
           valor_compra: this.state.valor,
