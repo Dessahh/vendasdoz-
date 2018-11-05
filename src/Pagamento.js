@@ -3,6 +3,8 @@ import './Carrinho.css'
 import './Pagamento.css'
 import Sessao from './Sessao.js'
 import ReactTable from 'react-table'
+import FreteBox from './FreteBox.js'
+import ProdutoItem from "./ProdutoItem"
 
 export default class Pagamento extends React.Component {
   constructor () {
@@ -31,8 +33,9 @@ export default class Pagamento extends React.Component {
       banco_gerador_boleto : "Banco do Brasil",
       data_vencimento_boleto : new Date(),
       endereco_fisico_site : "Rua Joaquim 123",
-      nome_site : "Vendas do Zé"
-	}
+      nome_site : "Vendas do Zé",
+      products: Sessao.getSessionShopCart()
+  }
 
   change = entry => {
 		this.setState({
@@ -126,7 +129,11 @@ export default class Pagamento extends React.Component {
               console.dir('ResponseJson: ' + responseJson);
               this.state.data = responseJson.pk_pedido;
               this.aumentaCredito();
-              alert("Pagamento efetuado com sucesso!");
+              if(this.state.metodo == "boleto"){
+                  alert("Boleto gerado com sucesso!\n codigo:" + responseJson.num_boleto);
+              } else {
+                  alert("Pagamento efetuado com sucesso!");
+              }
               this.props.history.push('/');
       }).catch(function(error) {
           console.log(error);
@@ -170,55 +177,48 @@ export default class Pagamento extends React.Component {
             })*/
     }
 
+  removeFromCart(){
+      alert("cannot remove from cart here!");
+  }
+
   render () {
 
-  	this.columns = [
-	  	{
-	        Header: 'Image',
-	        Cell: (row) => {
-	          return <div><img height={60} src={row.imageURLs ? row.imageURLs[0] : null} /></div>
-	        },
-	        accessor: 'images',
-	        id: 'image'
-	      },
-      { Header: 'Produto', accessor: 'description', width: 400 },
-      { Header: 'Quantidade', accessor: 'quantity', width: 100 },
-      { Header: 'Preço',
-        Cell: (row) => {
-          return 'R$ ' + parseFloat(row.value).toFixed(2)
-        },
-        accessor: 'value',
-        width: 100 }
-
-    ]
+      this.columns = [ // Define Table Columns
+          {
+              Cell: (row) => {
+                  return <ProdutoItem
+                      dataSource={this.state.products}
+                      row={row}
+                      edit={false}
+                      removeFromCart={this.removeFromCart}/>
+              }
+          }
+      ];
 
     return (
-      <div className='carrinho'>
+        <div className='carrinho'>
 
-      	<div className="leftSide">
+            <div className="leftSide">
 
-	        <h2> Carrinho </h2>
+                <h2> Carrinho </h2>
 
-	        <ReactTable
-	          loading={false}
-	          data={this.products}
-	          columns={this.columns}
-	          pages={1}
-	          getTheadThProps={this.getTheadThProps}
-	          getTdProps={this.getTheadThProps}
+                <ReactTable
+                    loading={false}
+                    data={this.state.products}
+                    columns={this.columns}
+                    pages={1}
+                    pageSize={this.state.products.length === 0 ? 5 : this.state.products.length}
+                    getTheadThProps={this.getTheadThProps}
+                    getTdProps={this.getTheadThProps}
+                    style={{'min-width': '700px'}}
 
-	        />
 
-	        <input
-	            type = "number"
-	            name = "cep"
-	            placeholder = "CEP"
-	            value = {this.state.cep}
-	            onChange = { entry => this.change(entry) }
-	        />
-	        <button onClick={this.calcularFrete}>Calcular Frete</button>
+                />
 
-	    </div>
+                <FreteBox show={this.state.showFrete} setFrete={this.setFrete} pacValue={this.state.pacValue}
+                          pacPrazo={this.state.pacPrazo} sedexValue={this.state.sedexValue} sedexPrazo={this.state.sedexPrazo}/>
+
+        </div>
 
 	    <div className="infoPedido">
             <h3>Detalhes do Pagamento</h3>
