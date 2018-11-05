@@ -116,14 +116,21 @@ export default class Pagamento extends React.Component {
           headers: {
           },
           body: JSON.stringify(body)
-      }).then((response) => response.json())
-          .then((responseJson) => {
+      }).then(function(response) {
+          if (!response.ok) {
+              alert("Erro no Pagamento!");
+              return;
+          }
+          return response;
+      }).then((responseJson) => {
               console.dir('ResponseJson: ' + responseJson);
               this.state.data = responseJson.pk_pedido;
               this.aumentaCredito();
               alert("Pagamento efetuado com sucesso!");
               this.props.history.push('/');
-          });
+      }).catch(function(error) {
+          console.log(error);
+      });
   }
 
     aumentaCredito () {
