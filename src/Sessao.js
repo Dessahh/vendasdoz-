@@ -9,6 +9,7 @@ export default class Sessao extends React.Component {
     static userscore = 0;
     static token = '';
     static shopCart = [];
+    static total = 0;
 
     static login(userCpf, token) {
         AsyncStorage.setItem(this.CPF_KEY, userCpf);
@@ -87,10 +88,17 @@ export default class Sessao extends React.Component {
         //return 400;
     }
 
+    static getSessionTotal() {
+        return Sessao.total;
+    }
+
+    static setSessionTotal(total) {
+        Sessao.total = total;
+    }
+
     static getSessionShopCart() {
         return Sessao.shopCart;
     }
-
     static addProductToShopCart(product) {
         Sessao.shopCart.push(product);
     }

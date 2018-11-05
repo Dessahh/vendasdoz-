@@ -1,5 +1,6 @@
 import React from 'react'
 import './Carrinho.css'
+import './Pagamento.css'
 import Sessao from './Sessao.js'
 import ReactTable from 'react-table'
 
@@ -18,7 +19,7 @@ export default class Pagamento extends React.Component {
       metodo: 'cartao',
       cep: '',
       cpf:'',
-      valor:123.45,
+      valor: Sessao.getSessionTotal(),
       cnpj_site: '123321',
       data_emissao_pedido : new Date(),
       num_cartao : null,
@@ -72,7 +73,7 @@ export default class Pagamento extends React.Component {
   }
 
   pay () {
-      alert("Efetuando pagamento!")
+      alert("Efetuando pagamento!");
 
       var targetUrl = 'http://pagamento.4pmv2bgufu.sa-east-1.elasticbeanstalk.com/servico/';
       var body = {
@@ -116,6 +117,8 @@ export default class Pagamento extends React.Component {
           .then((responseJson) => {
               console.dir('ResponseJson: ' + responseJson);
               this.state.data = responseJson.pk_pedido;
+              alert("Pagamento efetuado com sucesso!");
+              this.props.history.push('/');
           });
   }
 
@@ -207,13 +210,8 @@ export default class Pagamento extends React.Component {
             /><br/>
 
             <label>Valor</label>
-            <input
-                type = "valor"
-                name = "valor"
-                placeholder = "Valor"
-                value = {this.state.valor}
-                onChange = { entry => this.change(entry) }
-            /><br/>
+            <label>{'R$ ' + parseFloat(this.state.valor).toFixed(2)}
+            </label><br/>
 
             <label>Cartão ou Boleto?</label>
             <select

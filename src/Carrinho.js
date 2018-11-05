@@ -34,13 +34,18 @@ export default class Carrinho extends React.Component {
         };
 
         this.state.total = this.subTotal();
+        Sessao.setSessionTotal(this.state.total);
+
         this.state.subtotal = this.subTotal();
     }
 
     change = entry => {
         this.setState({
             [entry.target.name]: entry.target.value
-        })
+        });
+        if(entry.target.name == "total"){
+            Sessao.setSessionTotal(entry.target.value);
+        }
     };
 
     showFrete() {
