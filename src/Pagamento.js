@@ -133,6 +133,12 @@ export default class Pagamento extends React.Component {
         var targetUrl = proxyUrl + url;
 
         var formBody = [];
+        var details = {
+            cpf: this.state.cpf,
+            valor: this.state.valor,
+            loja: this.state.nome_site,
+            pago: true,
+        }
         for (var property in details) {
             var encodedKey = encodeURIComponent(property);
             var encodedValue = encodeURIComponent(details[property]);
@@ -140,6 +146,9 @@ export default class Pagamento extends React.Component {
         }
         formBody = formBody.join("&");
 
+        console.dir(formBody);
+        console.log("formbody credito");
+        console.log(formBody);
         return fetch(targetUrl, {
             method: 'PUT',
             headers: {
@@ -147,11 +156,11 @@ export default class Pagamento extends React.Component {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
             body: formBody,
-        }).then((response) => response.json())
+        })/*.then((response) => response.json())
             .then((responseJson) => {
                 console.log('tentou registrar cred :');
                 console.log(responseJson);
-            })
+            })*/
     }
 
   render () {
