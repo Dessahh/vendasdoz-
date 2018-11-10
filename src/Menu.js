@@ -11,12 +11,14 @@ export default class Menu extends React.Component {
         this.categorys = []
         this.buttonStyles = []
         
+        
     }
 
     state = {
         min: 0.00,
         max: 100000.00,
         nameQuery: "",
+        showPromo: false,
     };
 
     componentDidMount () {
@@ -91,6 +93,12 @@ export default class Menu extends React.Component {
         this.props.priceFilter(this.state.min, this.state.max)
     };
 
+    filterPromo = input => {
+        input.preventDefault()
+        console.log(this.state.showPromo);
+        this.props.promoFilter(this.state.showPromo)
+    }
+
     clearFilters = () => {
         for( let i = 0; i < this.buttonStyles.length; i++ ){
                 this.buttonStyles[i] = "unclicked"
@@ -98,9 +106,25 @@ export default class Menu extends React.Component {
         this.setState({
             min: 0.00,
             max: 100000.00,
+            showPromo: false,
         });
         this.props.clearFilters()
     };
+
+    promoChecked = () => {
+
+        if (this.state.showPromo === false) {
+            this.setState ({
+                showPromo: true,
+            })
+        } else {
+            this.setState ({
+                showPromo: false,
+            })
+        }
+        
+        this.props.promoFilter(!this.state.showPromo)
+    }
 
     render() {
         return (
@@ -120,7 +144,16 @@ export default class Menu extends React.Component {
                                 onChange = { entry => {this.change(entry); this.nameFilter(entry.target.value); } }
                             />
                         </div>
-
+                         <div className="price" >
+                            <input 
+                              type="checkbox"
+                              className="tag"
+                                checked={this.state.showPromo}
+                                onChange={this.promoChecked}
+                              />
+                            
+                            <p className="leftSide"> Somente em Promoção</p>
+                        </div>
                     </div>
                 </div>
 
