@@ -217,7 +217,7 @@ export default class Carrinho extends React.Component {
                             <h4 className="rightSide">{'R$ ' + parseFloat(total).toFixed(2)}</h4>
                         </div>
                         <button>
-                            {(total < 3500 || this.userscore >= 600) ? <Link to='/pagamento'>
+                            {(total < 10000) ? <Link to='/pagamento'>
                                 Continuar
                             </Link> : 'Seu crédito está baixo demais' }
                         </button>

@@ -15,7 +15,10 @@ import Home from './Home.js'
 import Menu from './Menu.js'
 import Carrinho from './Carrinho.js'
 import Error from './Error.js'
-import Pagamento from "./Pagamento";
+import Pagamento from './Pagamento'
+import Pedido from './Pedidos.js'
+import Senha from './AlterarSenha.js'
+import PedidoDetail from './PedidoDetail.js'
 
 class App extends Component {
   render () {
@@ -30,9 +33,12 @@ class App extends Component {
             <Route path='/consulta' component={Consulta} />
             <Route path='/cadastro' component={Cadastro} />
             <Route path='/login' component={Login} />
-              <Route path='/usuario' component={Usuario} />
+            <Route path='/usuario' component={Usuario} />
             <Route path='/carrinho' component={Carrinho} />
             <Route path='/pagamento' component={Pagamento} />
+            <Route path='/pedidos' component={Pedido} />
+            <Route path='/alterarSenha' component={Senha} />
+            <Route path='/pedidoDetail' component={PedidoDetail} />
             <Route component={Error} />
           </Switch>
 

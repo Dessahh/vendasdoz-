@@ -31,7 +31,10 @@ class Login extends React.Component {
                 const keys = Object.keys(responseJson);
                 if (keys[0] === 'sessionToken') {
                     try {
-                        Sessao.login(input.cpf, responseJson.sessionToken);
+                        console.log(input.cpf)
+                        console.log(responseJson)
+
+                        Sessao.login(responseJson.cpf, responseJson.sessionToken);
                         this.showModal('Usuario logado com sucesso.')
                     } catch (e) {
                         this.showModal(e.message);

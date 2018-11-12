@@ -8,22 +8,11 @@ class Usuario extends Component {
 
     state = {
         show: false,
-        showedit: false,
         message: '',
     }
-    static user = {email: "input.email",
-        senha: "input.senha",
-        cpf: 'cpf',
-        nome: "input.nome",
-        dataDeNascimento: "1995-03-10",
-        telefone: "112222",
-        idGrupo: '1',};
 
+    static user = {};
 
-    editForm = boolean => {
-        console.log(boolean);
-        this.setState({showedit: boolean});
-    };
     
     showModal = (message) => {
         this.setState({
@@ -32,8 +21,31 @@ class Usuario extends Component {
         });
     };
 
-    /*<input type="button" value="Editar" onClick={() => this.editForm(true)} />
-    * { this.state.showedit ? <UsuarioForms editar = {(e) => this.editar(e)}/>  : null }*/
+    alterar = input => {
+
+       // var targetUrl = 'http://ec2-18-231-28-232.sa-east-1.compute.amazonaws.com:3002/users/{userCpf}/update';
+        var targetUrl = 'http://ec2-18-231-28-232.sa-east-1.compute.amazonaws.com:3002/users/66666666666/update';
+
+
+        return fetch(targetUrl, {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                tokenSessao: Sessao.token,
+                nome: input.nome,
+                email: input.senha,
+                data_nasc: input.senha,
+                telefone: input.senha,
+
+            }),
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson)
+            });
+    };
 
     render() {
         Usuario.user = Sessao.getSessionUser();
@@ -47,7 +59,7 @@ class Usuario extends Component {
                     <div className='App-body'>
 
 
-                        <UsuarioForms editar = {(e) => this.editar(e)}/>
+                        <UsuarioForms alterar={input => this.alterar(input)}/>
 
 
                         <Modal

@@ -56,15 +56,14 @@ export default class Produto extends React.Component {
             }
         }).then((response) => response.json())
             .then((responseJson) => {
-                console.dir('ResponseJson: ' + responseJson);
+                
                 for (var json in responseJson.content) {
                     this.products.push(responseJson.content[json]);
                     this.products[json].cartQuantity = 0;
                     this.clearProducts.push(responseJson.content[json]);
                     this.clearProducts[json].cartQuantity = 0;
                 }
-                console.dir('Products: ' + this.products);
-                console.dir('All Products: ' + this.clearProducts);
+                console.log(this.products);
                 this.state.data = this.products;
                 this.setState({
                     data: this.products,
@@ -102,6 +101,7 @@ export default class Produto extends React.Component {
         this.products.length = 0;
 
         for (let i in this.clearProducts) {
+
             if (this.category && this.clearProducts[i].category !== this.category) {
                 continue;
             }
@@ -117,10 +117,7 @@ export default class Produto extends React.Component {
             if(this.showPromo === true && this.clearProducts[i].onSale === false){
                 continue;
             }
-
             
-            
-
             this.products.push(this.clearProducts[i]);
         }
 
