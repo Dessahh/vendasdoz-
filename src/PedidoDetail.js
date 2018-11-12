@@ -1,5 +1,5 @@
 import React from 'react'
-import './Pedidos.css'
+import './PedidoDetail.css'
 import './App.css'
 import ReactTable from 'react-table'
 import Sessao from './Sessao'
@@ -9,11 +9,10 @@ import Link from 'react-router-dom/es/Link'
 export default class Pedidos extends React.Component {
   constructor () {
     super()
-    this.idPedido = ''
     this.columns = []
     this.state = {
-      data: []
-
+      data: [],
+      idpedido: ''
     }
   }
 
@@ -23,6 +22,47 @@ export default class Pedidos extends React.Component {
         color: 'white'
       }
     }
+  }
+
+  componentDidMount () {
+    const { idpedido } = this.props.location
+    console.log('Component')
+    console.log(idpedido)
+    this.setState({
+      idpedido: idpedido
+    })
+
+    this.fetchPedido(idpedido)
+  }
+
+  fetchPedido (idpedido) {
+    console.log('Fetching Pedido Detail')
+
+    var proxyUrl = 'https://cors-anywhere.herokuapp.com/'
+    var url = `http://wsendereco.tk/site/produtospedido/id/${idpedido}`
+
+    let targetUrl = proxyUrl + url
+
+    return fetch(targetUrl, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => response.json())
+      .then((responseJson) => {
+        var produtos = []
+
+        for (var i = 0; i < responseJson.length; i++) {
+          produtos.push(responseJson[i])
+        }
+
+        console.log(produtos)
+
+        this.setState({
+          data: produtos
+        })
+      })
   }
 
   render () {
@@ -43,7 +83,7 @@ export default class Pedidos extends React.Component {
     return (
 
       <div className='App-body'>
-
+        <h2 className='title'> Pedido {this.state.idpedido} </h2>
         <ReactTable
           loading={false}
           data={data}

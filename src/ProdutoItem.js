@@ -33,7 +33,7 @@ export default class ProdutoItem extends React.Component {
     }
 
     Sessao.addProductToShopCart(this.props.dataSource[rowIndex])
-    console.log(`Added ${this.props.dataSource[rowIndex].cartQuantity} ${this.props.dataSource[rowIndex].description} to cart`)
+    console.log(`${this.props.dataSource[rowIndex].cartQuantity} ${this.props.dataSource[rowIndex].description} to cart`)
     if (this.props.dataSource[rowIndex].cartQuantity === 1) {
       this.props.showModal('Produto adicionado ao carrinho')
     } else {

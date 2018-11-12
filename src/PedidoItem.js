@@ -9,7 +9,7 @@ import Card from '@material-ui/core/Card/Card'
 import React from 'react'
 import Sessao from './Sessao'
 import ViewButom from '@material-ui/icons/RemoveRedEye'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export default class PedidoItem extends React.Component {
   constructor () {
@@ -55,7 +55,13 @@ export default class PedidoItem extends React.Component {
             {'Status: ' + data[row.index].statusPedido}
           </Typography>
 
-          <NavLink to='/pedidoDetail'> Ver Pedido </NavLink>
+          <Link
+            to={{
+              pathname: '/pedidoDetail',
+              idpedido: data[row.index].id
+            }}>
+            Ver Pedido
+          </Link>
 
         </CardContent>
       </div>

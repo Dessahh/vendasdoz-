@@ -31,27 +31,21 @@ export default class PedidoDetailItem extends React.Component {
         <CardContent>
           <Typography component='h5' variant='h5'
             style={{ 'paddingTop': '3px', 'paddingLeft': '3px' }}>
-            {'Número do Pedido: ' + data[row.index].id}
+            {'Número do Pedido: ' + data[row.index].idProduto}
           </Typography>
           <Typography variant='h5' style={{ 'paddingBottom': '3px', 'paddingLeft': '3px' }}>
-            {'Forma de pagamento: ' + data[row.index].formaPagamento}
+            {'Forma de pagamento: ' + data[row.index].quantidade}
           </Typography>
           <Typography variant='h5' style={{ 'paddingBottom': '3px', 'paddingLeft': '3px' }}>
-            {'Prazo de entrega: ' + data[row.index].prazoEntrega + ' dias'}
+            {'Forma de pagamento: ' + data[row.index].statusProduto}
           </Typography>
           <Typography variant='h5' style={{ 'paddingBottom': '3px', 'paddingLeft': '3px' }}>
-            {'Subtotal: R$ ' + parseFloat(data[row.index].valorProdutos).toFixed(2)}
+            {'Valor Unitário: R$ ' + parseFloat(data[row.index].valorUnitario).toFixed(2)}
           </Typography>
           <Typography variant='h5' style={{ 'paddingBottom': '3px', 'paddingLeft': '3px' }}>
-            {'Frete: R$ ' + parseFloat(data[row.index].freteTotal).toFixed(2)}
-          </Typography>
-          <Typography variant='h5' style={{ 'paddingBottom': '3px', 'paddingLeft': '3px' }}>
-            {'Total: R$ ' + parseFloat(data[row.index].valorTotal).toFixed(2)}
+            {'Valor Total: R$ ' + parseFloat(data[row.index].valorSoma).toFixed(2)}
           </Typography>
 
-          <Typography variant='h5' style={{ 'paddingBottom': '3px', 'paddingLeft': '3px' }}>
-            {'Status: ' + data[row.index].statusPedido}
-          </Typography>
         </CardContent>
       </div>
     </Card>
